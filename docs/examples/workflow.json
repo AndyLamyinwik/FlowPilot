@@ -1,0 +1,60 @@
+{
+  "name": "Branching draft",
+  "description": "A data-only example for creating a workflow. No nodes are executed.",
+  "definition": {
+    "schema_version": 1,
+    "nodes": [
+      {
+        "id": "manual",
+        "type": "trigger.manual",
+        "name": "Manual Trigger",
+        "position": { "x": 80, "y": 180 },
+        "config": {}
+      },
+      {
+        "id": "condition",
+        "type": "logic.condition",
+        "name": "Condition Placeholder",
+        "position": { "x": 320, "y": 180 },
+        "config": {}
+      },
+      {
+        "id": "accepted",
+        "type": "utility.logger",
+        "name": "Accepted Branch",
+        "position": { "x": 560, "y": 80 },
+        "config": { "message": "Accepted branch placeholder" }
+      },
+      {
+        "id": "rejected",
+        "type": "utility.logger",
+        "name": "Rejected Branch",
+        "position": { "x": 560, "y": 280 },
+        "config": { "message": "Rejected branch placeholder" }
+      }
+    ],
+    "edges": [
+      {
+        "id": "manual_to_condition",
+        "source": "manual",
+        "target": "condition",
+        "source_handle": null,
+        "target_handle": null
+      },
+      {
+        "id": "condition_to_accepted",
+        "source": "condition",
+        "target": "accepted",
+        "source_handle": "true",
+        "target_handle": null
+      },
+      {
+        "id": "condition_to_rejected",
+        "source": "condition",
+        "target": "rejected",
+        "source_handle": "false",
+        "target_handle": null
+      }
+    ]
+  }
+}

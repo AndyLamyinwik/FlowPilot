@@ -1,0 +1,46 @@
+{
+  "execution_id": "3d0f0285-1657-4737-bd07-ccc061a88030",
+  "workflow_id": "f769e300-96e1-4d7b-8770-04325142b632",
+  "status": "success",
+  "started_at": "2026-10-27T18:08:46.108373Z",
+  "finished_at": "2026-10-27T18:08:46.108373Z",
+  "node_results": [
+    {
+      "node_id": "manual",
+      "status": "success",
+      "output": {
+        "trigger": "manual"
+      },
+      "error": null,
+      "started_at": "2026-10-27T18:08:46.108373Z",
+      "finished_at": "2026-10-27T18:08:46.108373Z"
+    },
+    {
+      "node_id": "logger_a",
+      "status": "success",
+      "output": {
+        "manual": {
+          "trigger": "manual"
+        }
+      },
+      "error": null,
+      "started_at": "2026-10-27T18:08:46.108373Z",
+      "finished_at": "2026-10-27T18:08:46.108373Z"
+    },
+    {
+      "node_id": "logger_b",
+      "status": "success",
+      "output": {
+        "logger_a": {
+          "manual": {
+            "trigger": "manual"
+          }
+        }
+      },
+      "error": null,
+      "started_at": "2026-10-27T18:08:46.108373Z",
+      "finished_at": "2026-10-27T18:08:46.108373Z"
+    }
+  ],
+  "error": null
+}

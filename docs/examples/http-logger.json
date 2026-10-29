@@ -1,0 +1,58 @@
+{
+  "name": "Public HTTP request and logger",
+  "description": "Requires the deployment host allowlist to include httpbin.org.",
+  "definition": {
+    "schema_version": 1,
+    "nodes": [
+      {
+        "id": "manual",
+        "type": "trigger.manual",
+        "name": "Manual",
+        "position": {
+          "x": 80,
+          "y": 100
+        },
+        "config": {}
+      },
+      {
+        "id": "http_fetch",
+        "type": "action.http_request",
+        "name": "Fetch public JSON",
+        "position": {
+          "x": 320,
+          "y": 100
+        },
+        "config": {
+          "method": "GET",
+          "url": "https://httpbin.org/json",
+          "headers": {
+            "Accept": "application/json"
+          },
+          "timeout": 10
+        }
+      },
+      {
+        "id": "logger",
+        "type": "utility.logger",
+        "name": "Log completion",
+        "position": {
+          "x": 560,
+          "y": 100
+        },
+        "config": {}
+      }
+    ],
+    "edges": [
+      {
+        "id": "manual_http",
+        "source": "manual",
+        "target": "http_fetch"
+      },
+      {
+        "id": "http_logger",
+        "source": "http_fetch",
+        "target": "logger"
+      }
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+name: flowpilot
+
+services:
+  backend:
+    # V1 has one scheduler owner. Do not scale or use multiple Uvicorn workers.
+    deploy:
+      replicas: 1
+    build:
+      context: ./backend
+    environment:
+      FLOWPILOT_DATABASE_PATH: /app/data/flowpilot.db
+      FLOWPILOT_LOG_LEVEL: ${FLOWPILOT_LOG_LEVEL:-INFO}
+      FLOWPILOT_AI_ENABLED: '${FLOWPILOT_AI_ENABLED:-false}'
+      FLOWPILOT_ALLOWED_HOSTS: '${FLOWPILOT_ALLOWED_HOSTS:-["localhost","127.0.0.1","[::1]","backend"]}'
+      FLOWPILOT_SCHEDULER_ENABLED: '${FLOWPILOT_SCHEDULER_ENABLED:-true}'
+      FLOWPILOT_SCHEDULER_WORKERS: ${FLOWPILOT_SCHEDULER_WORKERS:-4}
+      FLOWPILOT_STORE_EXECUTION_OUTPUTS: '${FLOWPILOT_STORE_EXECUTION_OUTPUTS:-false}'
+      FLOWPILOT_HISTORY_RETENTION_DAYS: ${FLOWPILOT_HISTORY_RETENTION_DAYS:-30}
+      FLOWPILOT_HISTORY_MAX_RECORD_BYTES: ${FLOWPILOT_HISTORY_MAX_RECORD_BYTES:-262144}
+      FLOWPILOT_EXECUTION_MAX_NODES: ${FLOWPILOT_EXECUTION_MAX_NODES:-256}
+      FLOWPILOT_EXECUTION_MAX_OUTPUT_BYTES: ${FLOWPILOT_EXECUTION_MAX_OUTPUT_BYTES:-1048576}
+      FLOWPILOT_HTTP_ALLOWED_HOSTS: '${FLOWPILOT_HTTP_ALLOWED_HOSTS:-[]}'
+      FLOWPILOT_HTTP_ALLOW_INSECURE: '${FLOWPILOT_HTTP_ALLOW_INSECURE:-false}'
+      FLOWPILOT_HTTP_MAX_REQUEST_BYTES: ${FLOWPILOT_HTTP_MAX_REQUEST_BYTES:-65536}
+      FLOWPILOT_HTTP_MAX_RESPONSE_BYTES: ${FLOWPILOT_HTTP_MAX_RESPONSE_BYTES:-262144}
+      FLOWPILOT_CORS_ORIGINS: '${FLOWPILOT_CORS_ORIGINS:-["http://localhost:5173","http://127.0.0.1:5173"]}'
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import json, urllib.request; response = urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3); assert json.load(response) == {'status': 'ok'}"
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
+    environment:
+      API_PROXY_TARGET: http://backend:8000
+      FLOWPILOT_ALLOWED_HOSTS: '${FLOWPILOT_ALLOWED_HOSTS:-["localhost","127.0.0.1","[::1]","backend"]}'
+    ports:
+      - "127.0.0.1:5173:5173"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "Promise.all([fetch('http://127.0.0.1:5173/', {signal: AbortSignal.timeout(3000)}), fetch('http://127.0.0.1:5173/api/health', {signal: AbortSignal.timeout(3000)})]).then(async ([page, health]) => { if (!page.ok || !page.headers.get('content-type')?.includes('text/html') || !health.ok || (await health.json()).status !== 'ok') process.exit(1) }).catch(() => process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+

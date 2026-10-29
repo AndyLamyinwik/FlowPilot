@@ -1,0 +1,60 @@
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets.*
+.aws/
+
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# JavaScript dependencies and build artifacts
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.vite/
+.cache/
+.npm/
+.pnpm-store/
+
+# Persistent runtime data, SQLite journals and logs
+data/*
+!data/.gitkeep
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.instance.lock
+*.log
+logs/
+
+# Local tooling and editor/OS files
+.tools/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+

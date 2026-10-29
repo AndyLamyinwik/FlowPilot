@@ -1,0 +1,85 @@
+{
+  "execution_id": "372c0c4c-1ab7-47c4-afac-ddc484b4e764",
+  "workflow_id": "9802af70-a5e0-42a3-93b8-5c3af752c1f3",
+  "status": "success",
+  "started_at": "2026-10-28T04:21:48.900374Z",
+  "finished_at": "2026-10-28T04:21:48.900374Z",
+  "node_results": [
+    {
+      "node_id": "manual",
+      "status": "success",
+      "output": {
+        "trigger": "manual"
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.900374Z",
+      "finished_at": "2026-10-28T04:21:48.900374Z"
+    },
+    {
+      "node_id": "http_fetch",
+      "status": "success",
+      "output": {
+        "status_code": 200,
+        "body": {
+          "slideshow": {}
+        }
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.900374Z",
+      "finished_at": "2026-10-28T04:21:48.900374Z"
+    },
+    {
+      "node_id": "has_title",
+      "status": "success",
+      "output": {
+        "matched": false
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.900374Z",
+      "finished_at": "2026-10-28T04:21:48.900374Z"
+    },
+    {
+      "node_id": "transform",
+      "status": "skipped",
+      "output": null,
+      "error": null,
+      "started_at": null,
+      "finished_at": "2026-10-28T04:21:48.900374Z"
+    },
+    {
+      "node_id": "webhook",
+      "status": "skipped",
+      "output": null,
+      "error": null,
+      "started_at": null,
+      "finished_at": "2026-10-28T04:21:48.900374Z"
+    },
+    {
+      "node_id": "no_title",
+      "status": "success",
+      "output": {
+        "has_title": {
+          "matched": false
+        }
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.900374Z",
+      "finished_at": "2026-10-28T04:21:48.900374Z"
+    },
+    {
+      "node_id": "join",
+      "status": "success",
+      "output": {
+        "no_title": {
+          "has_title": {
+            "matched": false
+          }
+        }
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.900374Z",
+      "finished_at": "2026-10-28T04:21:48.900374Z"
+    }
+  ],
+  "error": null
+}

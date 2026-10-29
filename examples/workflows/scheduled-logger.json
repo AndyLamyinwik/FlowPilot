@@ -1,0 +1,32 @@
+{
+  "name": "Scheduled logger example",
+  "description": "Every five minutes in UTC. Importing only saves the workflow: the schedule remains disabled until explicitly enabled.",
+  "definition": {
+    "schema_version": 1,
+    "nodes": [
+      {
+        "id": "schedule",
+        "type": "trigger.schedule",
+        "name": "Every five minutes (UTC)",
+        "position": { "x": 100, "y": 180 },
+        "config": { "cron": "*/5 * * * *", "timezone": "UTC" }
+      },
+      {
+        "id": "logger",
+        "type": "utility.logger",
+        "name": "Log scheduled execution",
+        "position": { "x": 420, "y": 180 },
+        "config": {}
+      }
+    ],
+    "edges": [
+      {
+        "id": "schedule_to_logger",
+        "source": "schedule",
+        "target": "logger",
+        "source_handle": null,
+        "target_handle": null
+      }
+    ]
+  }
+}

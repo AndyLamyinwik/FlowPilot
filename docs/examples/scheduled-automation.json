@@ -1,0 +1,34 @@
+{
+  "name": "Scheduled HTTP check and outgoing notification",
+  "description": "Requires the exact host httpbin.org in the deployer HTTP allowlist. No API key.",
+  "definition": {
+    "schema_version": 1,
+    "nodes": [
+      {
+        "id": "schedule", "type": "trigger.schedule", "name": "Every hour",
+        "position": {"x": 100, "y": 100},
+        "config": {"cron": "0 * * * *", "timezone": "Asia/Singapore"}
+      },
+      {
+        "id": "http_fetch", "type": "action.http_request", "name": "Fetch example JSON",
+        "position": {"x": 350, "y": 100},
+        "config": {"method": "GET", "url": "https://httpbin.org/json", "timeout": 10}
+      },
+      {
+        "id": "has_title", "type": "logic.condition", "name": "Title exists",
+        "position": {"x": 600, "y": 100},
+        "config": {"source_node_id": "http_fetch", "field": "body.slideshow.title", "operator": "exists"}
+      },
+      {
+        "id": "notify", "type": "action.webhook", "name": "Send example title",
+        "position": {"x": 850, "y": 100},
+        "config": {"url": "https://httpbin.org/post", "source_node_id": "http_fetch", "path": "body.slideshow.title", "timeout": 10}
+      }
+    ],
+    "edges": [
+      {"id": "start", "source": "schedule", "target": "http_fetch"},
+      {"id": "check", "source": "http_fetch", "target": "has_title"},
+      {"id": "true-notify", "source": "has_title", "target": "notify", "source_handle": "true"}
+    ]
+  }
+}

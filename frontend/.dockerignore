@@ -1,0 +1,14 @@
+node_modules
+dist
+coverage
+.tools
+*.log
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets.*
+server.tests.mjs

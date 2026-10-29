@@ -1,0 +1,19 @@
+{
+  "name": "Every five minutes: schedule and logger",
+  "description": "Disabled until explicitly enabled through the schedule API.",
+  "definition": {
+    "schema_version": 1,
+    "nodes": [
+      {
+        "id": "schedule", "type": "trigger.schedule", "name": "Every five minutes",
+        "position": {"x": 100, "y": 100},
+        "config": {"cron": "*/5 * * * *", "timezone": "UTC"}
+      },
+      {
+        "id": "logger", "type": "utility.logger", "name": "Log execution event",
+        "position": {"x": 350, "y": 100}, "config": {}
+      }
+    ],
+    "edges": [{"id": "schedule-logger", "source": "schedule", "target": "logger"}]
+  }
+}

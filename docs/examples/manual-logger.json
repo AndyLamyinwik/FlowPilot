@@ -1,0 +1,46 @@
+{
+  "name": "Manual logging demo",
+  "description": "Manual Trigger to Logger A to Logger B, executed synchronously.",
+  "definition": {
+    "schema_version": 1,
+    "nodes": [
+      {
+        "id": "manual",
+        "type": "trigger.manual",
+        "name": "Manual Trigger",
+        "position": { "x": 80, "y": 160 },
+        "config": {}
+      },
+      {
+        "id": "logger_a",
+        "type": "utility.logger",
+        "name": "Logger A",
+        "position": { "x": 320, "y": 160 },
+        "config": {}
+      },
+      {
+        "id": "logger_b",
+        "type": "utility.logger",
+        "name": "Logger B",
+        "position": { "x": 560, "y": 160 },
+        "config": {}
+      }
+    ],
+    "edges": [
+      {
+        "id": "manual_to_logger_a",
+        "source": "manual",
+        "target": "logger_a",
+        "source_handle": null,
+        "target_handle": null
+      },
+      {
+        "id": "logger_a_to_logger_b",
+        "source": "logger_a",
+        "target": "logger_b",
+        "source_handle": null,
+        "target_handle": null
+      }
+    ]
+  }
+}

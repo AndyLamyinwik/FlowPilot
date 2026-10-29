@@ -1,0 +1,83 @@
+{
+  "name": "API condition example (setup required)",
+  "description": "GET the public httpbin JSON endpoint, then select a Logger branch based on the presence of a slideshow title. Requires explicit httpbin.org outbound allowlist setup; no API key is needed.",
+  "definition": {
+    "schema_version": 1,
+    "nodes": [
+      {
+        "id": "manual",
+        "type": "trigger.manual",
+        "name": "Manual Trigger",
+        "position": { "x": 80, "y": 240 },
+        "config": {}
+      },
+      {
+        "id": "http",
+        "type": "action.http_request",
+        "name": "Read public JSON",
+        "position": { "x": 380, "y": 240 },
+        "config": {
+          "method": "GET",
+          "url": "https://httpbin.org/json",
+          "headers": { "Accept": "application/json" },
+          "timeout": 10
+        }
+      },
+      {
+        "id": "condition",
+        "type": "logic.condition",
+        "name": "Has slideshow title?",
+        "position": { "x": 680, "y": 240 },
+        "config": {
+          "source_node_id": "http",
+          "field": "body.slideshow.title",
+          "operator": "exists"
+        }
+      },
+      {
+        "id": "logger_true",
+        "type": "utility.logger",
+        "name": "Title is present",
+        "position": { "x": 980, "y": 100 },
+        "config": {}
+      },
+      {
+        "id": "logger_false",
+        "type": "utility.logger",
+        "name": "Title is absent",
+        "position": { "x": 980, "y": 380 },
+        "config": {}
+      }
+    ],
+    "edges": [
+      {
+        "id": "manual_to_http",
+        "source": "manual",
+        "target": "http",
+        "source_handle": null,
+        "target_handle": null
+      },
+      {
+        "id": "http_to_condition",
+        "source": "http",
+        "target": "condition",
+        "source_handle": null,
+        "target_handle": null
+      },
+      {
+        "id": "condition_to_true",
+        "source": "condition",
+        "target": "logger_true",
+        "source_handle": "true",
+        "target_handle": null
+      },
+      {
+        "id": "condition_to_false",
+        "source": "condition",
+        "target": "logger_false",
+        "source_handle": "false",
+        "target_handle": null
+      }
+    ]
+  }
+}

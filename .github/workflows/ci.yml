@@ -1,0 +1,93 @@
+name: CI
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: backend
+        shell: bash
+    env:
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+    steps:
+      # Official v6 refs verified against GitHub on 2026-10-29; use immutable commits.
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          clean: false
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12.14"
+      - name: Install locked dependencies
+        run: python -m pip install --require-hashes -r requirements-dev.txt
+      - name: Check dependencies and syntax
+        run: |
+          python -m pip check
+          python -m compileall -q app
+      - name: Run tests with isolated data
+        env:
+          FLOWPILOT_DATABASE_PATH: ${{ runner.temp }}/flowpilot-ci.db
+        run: python -m pytest -q --tb=short --basetemp="$RUNNER_TEMP/flowpilot-pytest"
+
+  frontend:
+    name: Frontend checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: frontend
+        shell: bash
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          clean: false
+      - name: Set up Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24.22.1"
+          package-manager-cache: false
+      - name: Select the recorded npm version
+        run: npm install --global npm@11.21.1
+      - name: Install from lockfile
+        run: npm ci
+      - name: TypeScript check
+        run: npm run typecheck
+      - name: Unit and component tests
+        run: npm test
+      - name: Production server tests
+        run: npm run test:server
+      - name: Production build
+        run: npm run build
+
+  docker:
+    name: Docker configuration and builds
+    needs: [backend, frontend]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          clean: false
+      - name: Validate default and example configuration
+        run: |
+          docker compose config --quiet
+          docker compose --env-file .env.example config --quiet
+      - name: Build both images
+        run: docker compose build --parallel

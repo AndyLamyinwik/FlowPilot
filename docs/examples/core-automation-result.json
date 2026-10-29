@@ -1,0 +1,88 @@
+{
+  "execution_id": "e91b2a81-6a97-47d4-b7d3-68450e6bd3d2",
+  "workflow_id": "128cfced-03e7-4539-a6c4-490ff2bf6e1d",
+  "status": "success",
+  "started_at": "2026-10-28T04:21:48.854659Z",
+  "finished_at": "2026-10-28T04:21:48.856652Z",
+  "node_results": [
+    {
+      "node_id": "manual",
+      "status": "success",
+      "output": {
+        "trigger": "manual"
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.854659Z",
+      "finished_at": "2026-10-28T04:21:48.854659Z"
+    },
+    {
+      "node_id": "http_fetch",
+      "status": "success",
+      "output": {
+        "status_code": 200,
+        "body": {
+          "slideshow": {
+            "title": "FlowPilot demo"
+          }
+        }
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.854659Z",
+      "finished_at": "2026-10-28T04:21:48.855652Z"
+    },
+    {
+      "node_id": "has_title",
+      "status": "success",
+      "output": {
+        "matched": true
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.855652Z",
+      "finished_at": "2026-10-28T04:21:48.855652Z"
+    },
+    {
+      "node_id": "transform",
+      "status": "success",
+      "output": {
+        "title": "FlowPilot demo",
+        "source": "FlowPilot"
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.855652Z",
+      "finished_at": "2026-10-28T04:21:48.855652Z"
+    },
+    {
+      "node_id": "webhook",
+      "status": "success",
+      "output": {
+        "status_code": 200,
+        "delivered": true
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.855652Z",
+      "finished_at": "2026-10-28T04:21:48.855652Z"
+    },
+    {
+      "node_id": "no_title",
+      "status": "skipped",
+      "output": null,
+      "error": null,
+      "started_at": null,
+      "finished_at": "2026-10-28T04:21:48.855652Z"
+    },
+    {
+      "node_id": "join",
+      "status": "success",
+      "output": {
+        "webhook": {
+          "status_code": 200,
+          "delivered": true
+        }
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.855652Z",
+      "finished_at": "2026-10-28T04:21:48.856652Z"
+    }
+  ],
+  "error": null
+}

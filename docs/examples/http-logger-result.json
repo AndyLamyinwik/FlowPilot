@@ -1,0 +1,52 @@
+{
+  "execution_id": "c54ec8d7-7d74-458f-b03c-e0a0aa6db30c",
+  "workflow_id": "309fe9a8-e9d8-4d13-b735-be8fd1f19bbf",
+  "status": "success",
+  "started_at": "2026-10-28T04:21:48.818514Z",
+  "finished_at": "2026-10-28T04:21:48.819522Z",
+  "node_results": [
+    {
+      "node_id": "manual",
+      "status": "success",
+      "output": {
+        "trigger": "manual"
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.818514Z",
+      "finished_at": "2026-10-28T04:21:48.818514Z"
+    },
+    {
+      "node_id": "http_fetch",
+      "status": "success",
+      "output": {
+        "status_code": 200,
+        "body": {
+          "slideshow": {
+            "title": "FlowPilot demo"
+          }
+        }
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.818514Z",
+      "finished_at": "2026-10-28T04:21:48.819522Z"
+    },
+    {
+      "node_id": "logger",
+      "status": "success",
+      "output": {
+        "http_fetch": {
+          "status_code": 200,
+          "body": {
+            "slideshow": {
+              "title": "FlowPilot demo"
+            }
+          }
+        }
+      },
+      "error": null,
+      "started_at": "2026-10-28T04:21:48.819522Z",
+      "finished_at": "2026-10-28T04:21:48.819522Z"
+    }
+  ],
+  "error": null
+}

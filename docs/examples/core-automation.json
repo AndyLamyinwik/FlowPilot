@@ -1,0 +1,143 @@
+{
+  "name": "Conditional JSON webhook",
+  "description": "Public HTTP JSON, conditional transform and outgoing webhook, then branch join. Requires httpbin.org in the deployment allowlist.",
+  "definition": {
+    "schema_version": 1,
+    "nodes": [
+      {
+        "id": "manual",
+        "type": "trigger.manual",
+        "name": "Manual",
+        "position": {
+          "x": 80,
+          "y": 180
+        },
+        "config": {}
+      },
+      {
+        "id": "http_fetch",
+        "type": "action.http_request",
+        "name": "Fetch public JSON",
+        "position": {
+          "x": 320,
+          "y": 180
+        },
+        "config": {
+          "method": "GET",
+          "url": "https://httpbin.org/json",
+          "headers": {
+            "Accept": "application/json"
+          },
+          "timeout": 10
+        }
+      },
+      {
+        "id": "has_title",
+        "type": "logic.condition",
+        "name": "Title exists",
+        "position": {
+          "x": 560,
+          "y": 180
+        },
+        "config": {
+          "source_node_id": "http_fetch",
+          "field": "body.slideshow.title",
+          "operator": "exists"
+        }
+      },
+      {
+        "id": "transform",
+        "type": "data.transform",
+        "name": "Build notification",
+        "position": {
+          "x": 800,
+          "y": 80
+        },
+        "config": {
+          "mapping": {
+            "title": {
+              "source_node_id": "http_fetch",
+              "path": "body.slideshow.title"
+            },
+            "source": {
+              "value": "FlowPilot"
+            }
+          }
+        }
+      },
+      {
+        "id": "webhook",
+        "type": "action.webhook",
+        "name": "Send outgoing webhook",
+        "position": {
+          "x": 1040,
+          "y": 80
+        },
+        "config": {
+          "url": "https://httpbin.org/post",
+          "timeout": 10,
+          "source_node_id": "transform"
+        }
+      },
+      {
+        "id": "no_title",
+        "type": "utility.logger",
+        "name": "No title branch",
+        "position": {
+          "x": 800,
+          "y": 280
+        },
+        "config": {}
+      },
+      {
+        "id": "join",
+        "type": "utility.logger",
+        "name": "Join completed branches",
+        "position": {
+          "x": 1280,
+          "y": 180
+        },
+        "config": {}
+      }
+    ],
+    "edges": [
+      {
+        "id": "manual_http",
+        "source": "manual",
+        "target": "http_fetch"
+      },
+      {
+        "id": "http_condition",
+        "source": "http_fetch",
+        "target": "has_title"
+      },
+      {
+        "id": "condition_true",
+        "source": "has_title",
+        "target": "transform",
+        "source_handle": "true"
+      },
+      {
+        "id": "condition_false",
+        "source": "has_title",
+        "target": "no_title",
+        "source_handle": "false"
+      },
+      {
+        "id": "transform_webhook",
+        "source": "transform",
+        "target": "webhook"
+      },
+      {
+        "id": "webhook_join",
+        "source": "webhook",
+        "target": "join"
+      },
+      {
+        "id": "no_title_join",
+        "source": "no_title",
+        "target": "join"
+      }
+    ]
+  }
+}
