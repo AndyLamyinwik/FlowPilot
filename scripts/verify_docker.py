@@ -138,7 +138,7 @@ def main():
                         "Multiple backend owners were created")
 
             compose("stop", "backend")
-            compose("start", "--wait", "backend")
+            compose("start", "backend")
             verify_persistence()
             compose("up", "-d", "--no-build", "--no-deps", "--force-recreate",
                     "--wait", "--wait-timeout", "120", "backend")

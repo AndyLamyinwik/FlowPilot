@@ -6,6 +6,8 @@ Changes are grouped by candidate version. This file describes source preparation
 
 ### Release Preparation
 
+- Traditional Chinese and Simplified Chinese introductions, README language navigation, and a trilingual GitHub About description.
+- Isolated Docker startup, execution/history and persistence/recreation acceptance in the existing CI; a Compose start-flag compatibility issue found by the first runtime attempt was corrected without weakening health checks.
 - English project overview, installation guidance, and explicit deployment limits.
 - Contribution and security policies, including instructions for GitHub Private Vulnerability Reporting.
 - Candidate release notes, a release checklist, and workflow examples for the first public test version.

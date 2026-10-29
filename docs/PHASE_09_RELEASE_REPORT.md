@@ -6,6 +6,16 @@ Verification date: **2026-10-30 (Asia/Shanghai)**. This records an attempted fin
 
 **RELEASE_PARTIALLY_COMPLETED. Formal-release readiness: NOT_READY.** The user explicitly requested publishing the complete reviewed source now, separately from the formal release gates. This source commit publishes the application, tests, examples, deployment configuration and documentation to the Public repository. Docker runtime acceptance and exact-commit remote CI must still be established before a v0.1.0 tag/GitHub Release. No image publication is authorized. The product source, dependencies and user data remain unchanged by the source-upload preparation.
 
+## Verified Source Upload and Follow-up Acceptance
+
+Complete source was pushed normally to main as **8847cf3605cc2a3dbcf3d6c892b6b5960609d232** (194 files). Its [remote CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40920568507) passed backend, frontend and both Docker image builds. The repository tree and rendered README were verified on GitHub.
+
+Commit 679d2f4 added scripts/verify_docker.py and one step to the same read-only CI. Its [runtime attempt](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40921193492) reached real container health, proxy/API, manual execution/history and enabled-schedule checks, then failed because the runner's Compose start command does not support --wait. The follow-up removes that unsupported flag; the existing health wait and persistence assertions remain. A passing full runtime result is required before release.
+
+A public isolated clone of 679d2f4 matched its 195-file tree and passed locked offline npm ci, TypeScript and production build; no runtime data or local artifacts were tracked. Traditional/Simplified Chinese READMEs and GitHub About descriptions were added at the user's request. The product app and lockfiles were not changed; the existing CI was deliberately extended for deployment verification.
+
+The remaining tables preserve the earlier acceptance snapshot where indicated. Exact subsequent source/CI commits are available in the repository history and execution report; no old successful run is used to certify a newer commit.
+
 ## Release Identity
 
 | Field | Actual status |

@@ -1,5 +1,7 @@
 # FlowPilot
 
+[English](README.md) | [繁體中文](README.zh-TW.md) | [简体中文](README.zh-CN.md)
+
 Lightweight, self-hosted workflow automation. AI-ready by design.
 
 FlowPilot lets you build and run node-based automation workflows in a visual editor. It stores workflows and execution history in SQLite and runs on your own machine with a single backend process.

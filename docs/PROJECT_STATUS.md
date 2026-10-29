@@ -8,6 +8,10 @@
 
 **正式版本發布判定仍 NOT_READY。** 本機沒有 Docker Engine；容器驗收與推送 Commit 的遠端 CI 結果須另行取得，不把原始碼上傳當作它們通過。完整來源可從 main 取得，沒有建立 v0.1.0 tag／GitHub Release 或發布 Image。Public 倉庫與已授權 ChatGPTBot 連接、私人漏洞回報設定均已確認；沒有提交測試漏洞或宣稱通知投遞已測。沒有改動產品程式碼、依賴或使用者資料。確切 Commit SHA／推送／CI 結果記錄於執行摘要及 [Commit History](https://github.com/AndyLamyinwik/FlowPilot/commits/main)，詳見 [PHASE_09_RELEASE_REPORT.md](PHASE_09_RELEASE_REPORT.md)。
 
+原始碼已正常推送：`8847cf3605cc2a3dbcf3d6c892b6b5960609d232`，194 檔；[首輪遠端 CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40920568507) 的後端、前端與 Docker 構建全部通過。後續 `679d2f4` 在同一 CI 加入隔離容器驗收；真實啟動／health／工作流執行／歷史／排程啟用通過，但 stop/start 步驟因 runner 的 Compose 不支援 start --wait 失敗。已移除該參數，保留完整健康與持久化斷言，待新 Commit 的遠端結果；不把失敗嘗試算作通過。
+
+另已依使用者要求加入 [繁體中文介紹](../README.zh-TW.md)及[简体中文介绍](../README.zh-CN.md)，英文首頁提供語言切換，GitHub About 也包含英／繁／簡三種介紹。公開 Clone `679d2f4` 已核對完整 195 檔，隔離 npm ci --offline／typecheck／build 通過且 lockfile／Clone working tree 未變更。
+
 ### Phase 09 實際驗證（2026-10-30）
 
 | 檢查 | 結果 |
@@ -18,7 +22,7 @@
 | TypeScript／production build | **PASS**，197 modules |
 | Compose default／.env.example、actionlint | **PASS**，僅配置與語法，不代表 Docker／遠端 CI |
 | 安全與版本核對 | **PASS（有限範圍）**，最終 183 文字檔掃描無未解決疑似真實憑證；測試假資料已核對，117 保護檔案雜湊與 107 runtime 路徑不變，應用版本均 0.1.0，AI 只有 Mock |
-| 文件驗證 | **PASS**，14 份 Markdown／89 個相對連結，無 UTF-8 錯誤／壞連結／未關閉 fence |
+| 文件驗證 | **PASS**，16 份 Markdown／134 個相對連結，無 UTF-8 錯誤／壞連結／未關閉 fence |
 | GitHub 帳號／目標倉庫 | **PASS**，使用者提供的帳號與已建立的 Public 倉庫吻合；metadata 回傳 admin／push=true；特定 collaborator-permission endpoint 因 integration scope 回傳 403，不冒充寫入測試通過 |
 | 初始遠端 refs／版本衝突 | **PASS（上傳前）**，git ls-remote 成功且沒有 branch／tag refs；不覆蓋既有歷史或版本 |
 | 本地 Git／候選檔案 | **PASS**，194 檔依明確清單審查與暫存，blob 與已審查檔案逐一相同，24 項 ignore 檢查通過，8 張截圖已檢視；依使用者最新授權 commit／push 原始碼 |
