@@ -2,7 +2,7 @@
 
 ## Phase 09 最終驗收邊界
 
-Phase 09 重跑現有後端／前端／正式前端服務測試、型別與構建檢查，核對安全配置、版本及 GitHub 目的地，沒有變更產品架構或程式碼。使用者明確同意後，已建立 Public 的 AndyLamyinwik/FlowPilot、保留 ChatGPTBot 連接，並另行同意啟用私人漏洞回報；已核對 Enabled 設定及公開回報入口，沒有提交報告或宣稱通知投遞已測。使用者後續另行要求立即上傳完整原始碼，因此經明確清單審查後 commit／push 原始碼，Docker／CI 驗收狀態仍如實記錄。正式版本 tag／GitHub Release 必須等待必要驗收，原始碼公開不等於 v0.1.0 正式發布。詳見 [PHASE_09_RELEASE_REPORT.md](PHASE_09_RELEASE_REPORT.md)。
+Phase 09 重跑現有後端／前端／正式前端服務測試、型別與構建檢查，核對安全配置、版本及 GitHub 目的地，沒有變更產品架構、依賴或使用者資料。完整來源已上傳 Public 的 AndyLamyinwik/FlowPilot，私人漏洞回報設定及公開入口已核實；沒有提交測試漏洞或宣稱通知投遞已測。既有單一唯讀 CI 增加隔離 Docker 驗收：使用臨時 SQLite 目錄，驗證正式前端／API、工作流執行與歷史、容器 stop/start／重建及資料與排程恢復；不操作使用者資料或發布 Image。提交 7fad8be 的遠端 CI 全部通過，本機 Docker 仍不可用。正式 tag 必須指向最後通過必要 CI 的提交，發布狀態見 [PHASE_09_RELEASE_REPORT.md](PHASE_09_RELEASE_REPORT.md)。以下各階段保留當時記錄，其中 Docker／遠端 CI 缺口已由 Phase 09 的實際遠端驗收補足。
 
 ## Phase 08B 發布準備邊界
 

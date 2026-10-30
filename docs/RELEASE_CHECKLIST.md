@@ -1,23 +1,24 @@
 # FlowPilot v0.1.0 Release Checklist
 
-Verification date: 2026-10-29 (Asia/Shanghai). Candidate: **0.1.0, unreleased Early Public Release**.
-
-Phase 09 recheck: **2026-10-30 (Asia/Shanghai), RELEASE_PARTIALLY_COMPLETED / formal-release NOT_READY**. Backend 796, frontend 274 and production server 12 tests passed again, along with typecheck, build, both Compose configurations and actionlint. The Public [FlowPilot repository](https://github.com/AndyLamyinwik/FlowPilot) and private-reporting entry are verified. The user's later explicit instruction authorizes publishing the complete reviewed source now, so source commit/push is separate from formal tag/Release acceptance. Exact-commit remote CI and Docker runtime results must still be established, without misreporting local parsing as runtime acceptance. See the [Phase 09 report](PHASE_09_RELEASE_REPORT.md). Detailed test/dependency tables retain dated Phase 08B evidence unless a newer result is stated.
+Verification date: **2026-10-30 (Asia/Shanghai)**. Version: **0.1.0, Early Public Release preparation**. Detailed Phase 08B counts and license review below retain their dated evidence unless superseded here.
 
 ## Release Decision
 
-**NOT_READY for a formal v0.1.0 tag/Release.** Complete reviewed source is published under the user's additional authorization. Initial 194-file staged-source review passed; a separate formatting check reports existing CRLF/EOF notices. Critical Docker runtime and exact-commit CI evidence remain outstanding. No tag, GitHub Release or image publication is claimed.
+**NOT_READY for a formal tag/Release: FP07A-002 still affects core workflow discovery.** Complete reviewed source and English/Traditional/Simplified introductions are public. The exact [7fad8be commit CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) passed all backend, frontend and real Docker deployment checks. R1 and R4 are no longer environment blockers; local Windows Docker is still unavailable and is not claimed tested.
 
-Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **BLOCKED**. A local passing check does not turn a remote or container check into PASS. No new unresolved P0/P1 was confirmed in this scoped preparation; the existing three P2 issues remain disclosed.
+The original Phase 09 READY_WITH_WARNINGS condition requires warnings not to affect core functionality, security or publication integrity. FP07A-002 can reject the whole Dashboard/Open list after a backend-valid unsafe-integer API import. A P2 label and workaround do not erase that impact. A minimal list-isolation correction is being prepared in an ignored proposal; applying frontend changes needs a narrow exception to the current AGENTS scope. Final exact-commit CI remains mandatory after any correction.
 
-## Release Blockers
+Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **BLOCKED**. No unresolved P0 or release-blocking P1 has been identified in the scoped review. No tag, Release or image publication is claimed at this freeze. See the [Phase 09 report](PHASE_09_RELEASE_REPORT.md).
 
-| ID | Status | Required maintainer action |
+## Release Gates
+
+| ID | Status | Evidence / remaining action |
 | --- | --- | --- |
-| R1 — Docker runtime acceptance | NOT_TESTED | On a Docker Engine host, build and start an isolated project; verify health, browser/API connectivity, stop/start, container recreation, SQLite permissions/persistence and scheduler recovery. Current environment: **DOCKER_NOT_TESTED / DOCKER_UNAVAILABLE**. |
-| R2 — Repository identity and initial candidate review | PASS | Public target, owner/default main and empty remote refs verified. All 194 staged blobs equal reviewed files; bounded secret/artifact/visual checks and 24 ignore probes passed. No prior local commits/remote refs; recheck subsequent changes and refs/protection before commit/push. |
-| R3 — Private vulnerability reporting configuration | PASS | Enabled after explicit consent; setting and public Report a vulnerability entry verified. SECURITY contains the real route. No report/advisory was submitted and notification delivery was not tested. |
-| R4 — Remote GitHub Actions | NOT_TESTED | Run the existing workflow against the reviewed source in the intended repository and inspect all jobs. No remote workflow run is available here; publication is not authorized by this checklist. |
+| R1 — Docker runtime acceptance | PASS | GitHub Ubuntu 24.04, exact 7fad8be: both images built; isolated startup, frontend/proxy/API, manual execution/history, backend stop/start, force-recreation, SQLite persistence/write permissions and schedule recovery all passed. User data untouched; no down -v. |
+| R2 — Repository/source identity | PASS | Verified Public AndyLamyinwik/FlowPilot, main, normal source pushes and reviewed tree; bounded secret/artifact/screenshot review and ignore probes passed. Final changes must be rechecked before normal push. |
+| R3 — Private vulnerability reporting | PASS | Separately approved, enabled setting and public reporting entry verified; real route in SECURITY. Report submission/notification delivery NOT_TESTED. |
+| R4 — Remote GitHub Actions | PASS for 7fad8be | All three jobs and necessary steps passed for that exact SHA. Any final release commit must pass its own CI before tag creation; old successful runs cannot certify it. |
+| R5 — Core warning assessment | BLOCKED | FP07A-002 needs list isolation while preserving strict edit precision safety. FP07A-003/004 remain localized, disclosed limitations with unaffected independent History Detail / ordinary UI pagination. |
 
 ## Code
 
@@ -30,7 +31,7 @@ Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **
 | TypeScript check | PASS | npm run typecheck. |
 | Production frontend build | PASS | npm run build; 197 modules, no blocking error. |
 | AI Provider tests | PASS | Included in full backend run; Mock only, no real model request, SDK, key or model download. |
-| Product scope unchanged | PASS | Existing app/frontend source, dependency files and runtime configuration hashes unchanged. Only release documents/examples/tests and backend context exclusions were added or updated. |
+| Product scope / protected files | PASS | 116 of 117 Phase 08B baseline hashes unchanged, including runtime source/LICENSE/dependencies/Compose/user DB. The single expected exception is the existing CI extended with isolated Docker acceptance; no product change applied at this freeze. |
 | Existing P2 resolution | FAIL | FP07A-002: large-integer config can block workflow lists; 003: deleted-node stale result selection; 004: extreme history offset returns controlled 500. These remain known limitations, not hidden passing claims. See the [audit](PHASE_07A_AUDIT.md). |
 
 ## Docker
@@ -40,9 +41,9 @@ Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **
 | Default Compose config | PASS | Official standalone Compose 5.6.0 config --quiet. |
 | .env.example Compose config | PASS | Same validation with --env-file .env.example. |
 | Dockerfile/context review | PASS | Existing pinned runtimes, hashed backend install, npm ci/multistage frontend, no dev server in runtime; context exclusions retained and backend exclusions strengthened. |
-| Docker build | NOT_TESTED | No docker executable/Engine pipe; no image build claimed. |
-| Docker startup and container health | NOT_TESTED | Native Uvicorn/Node evidence is separate from container execution. |
-| Container stop/start/recreation and data persistence | NOT_TESTED | Requires R1. No production database or volume was deleted. |
+| Docker build | PASS (remote) | Both production images built in exact 7fad8be CI on Ubuntu 24.04. Local Windows Docker unavailable. |
+| Docker startup and container health | PASS (remote) | Isolated real Compose startup, both health paths and production frontend HTML. |
+| Container stop/start/recreation and data persistence | PASS (remote) | R1 verifies unchanged workflow/history/schedule state, new backend container ID after force recreation and no replay. Temporary data only. |
 | Native production frontend/backend and sample history | PASS | Isolated Uvicorn and dist/Node runtime; imported three exact release payloads, executed Manual Logger, checked matching successful history, and left the schedule disabled. |
 | Prior native process restart/Scheduler recovery | PASS | Previously executed and retained as Phase 07B evidence; not rerun or represented as Docker verification in this phase. See [readiness report](PHASE_07B_RELEASE_READINESS.md). |
 
@@ -50,14 +51,14 @@ Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **
 
 | Check | Status | Evidence |
 | --- | --- | --- |
-| README | PASS | Primarily English; actual features, local-first limits, configuration, first workflow, scheduling, troubleshooting and document links. |
+| README | PASS | English entry with Traditional/Simplified Chinese introductions and navigation; actual features, local-first limits, configuration, first workflow and current Docker evidence. |
 | LICENSE | PASS | Existing standard MIT text and `Copyright (c) 2026 FlowPilot contributors` preserved byte-for-byte. No holder or conditions invented. |
 | CONTRIBUTING | PASS | Locked dependency setup, project structure, tests, compatibility expectations and PR/report guidance. |
 | SECURITY document | PASS | Local/trusted deployment, inbound versus outbound policy, secrets, data and AI boundaries documented. |
 | Operational private reporting setting/entry | PASS | Phase 09: explicitly authorized, enabled and public entry verified. No report submitted or notification delivery tested. |
-| CHANGELOG | PASS | Unreleased preparation and 0.1.0 unreleased candidate are distinct; no fictional older release or release date. |
-| Quick Start/configuration consistency | PASS | Source/config cross-check completed; actual Docker Quick Start remains NOT_TESTED. The verified repository URL points to complete source; formal release limits remain explicit. |
-| Release Notes | PASS | [v0.1.0 draft](releases/v0.1.0.md), English, unreleased, limits disclosed. |
+| CHANGELOG | PASS | Release preparation and 0.1.0 features documented without claiming an already published tag/Release. |
+| Quick Start/configuration consistency | PASS | Source/config cross-check plus real remote Docker startup; verified clone URL contains complete source. Platform and formal publication limits remain explicit. |
+| Release Notes | PASS | [v0.1.0 notes](releases/v0.1.0.md), English, actual features, AI Mock-only and limits. Publication remains gated. |
 | Workflow examples | PASS | Three validated payloads and an [API import/setup guide](../examples/workflows/README.md); no file-import UI is claimed. |
 | Screenshots | PASS | Three genuine 1280×720 JPEGs from an isolated running current app, visually inspected; no keys, private workflow data or local filesystem paths. No synthetic UI. |
 | Links/fences/version references | PASS | 13 Markdown files, 80 relative links and 182 candidate text files checked; no broken links, unclosed fences or UTF-8 errors. Application version references agree at 0.1.0. |
@@ -107,8 +108,8 @@ This is a bounded declaration check, not a legal opinion, proof of all asset pro
 | Single CI configuration | PASS | Existing .github/workflows/ci.yml retained; backend/frontend/Docker config/build jobs, no duplicate or publishing workflow. |
 | Local workflow validation | PASS | actionlint 1.7.12; ShellCheck/Pyflakes unavailable and not claimed. |
 | CI permissions and pinned Actions | PASS | contents:read, no persisted checkout credentials, no PR-text shell interpolation or real secrets; exact SHAs match retained official verification evidence. |
-| Remote CI | NOT_TESTED | R4. Local commands do not prove GitHub execution. |
-| Description/topics/about suggestions prepared | PASS | See below; no remote settings changed. |
+| Remote CI | PASS for 7fad8be | R4; actual remote backend/frontend/Docker jobs inspected. Final release commit needs its own successful run. |
+| Description/topics/about | PASS | About description applied in English/Traditional/Simplified Chinese at user request; topics below remain suggestions, homepage unset. |
 | Repository creation/description | PASS | Phase 09: verified Public repository, exact name and documented description created after explicit consent. No official website invented; topics remain suggestions. |
 | Candidate application versions | PASS | backend pyproject, FastAPI app, frontend package.json and root package-lock entry all 0.1.0. Backend remains an application, not a newly published Python package; frontend stays private for npm publication. |
 | Published Docker image version | NOT_APPLICABLE | No application image published or image tag created; base image runtime versions are not the application version. |
@@ -145,8 +146,8 @@ node .tools/npm11/package/bin/npm-cli.js run build
 
 The screenshot instance reused the existing production smoke harness in a new .tools/phase08b-* directory, with a new SQLite file and loopback-only Uvicorn/Node. Three example payloads were created through the real API; only the offline manual workflow was executed. Dashboard/editor/history screenshots reflect its actual successful record. A browser tool connection interruption was recovered before the History capture; no synthetic substitute was used. Temporary services were stopped and the test tab closed.
 
-Final local checks also verify document links/fences, JPEG files, example/schema agreement, exact version values, 117 protected source/license/dependency/data hashes and source inventory patterns. All 117 protected hashes are unchanged. Ignored evidence stays in .tools/phase08b-*; it is not a release artifact.
+Phase 08B local checks verified 13 Markdown files / 80 relative links and all 117 baseline hashes then unchanged. Phase 09 now retains 116 byte-identical baseline files and one reviewed CI extension. New document/link checks and exact-SHA evidence are recorded in the Phase 09 report; ignored .tools evidence is not a release asset.
 
 ## Maintainer Review
 
-Complete Docker acceptance (R1), recheck the reviewed candidate and target, then require exact-commit remote CI (R4) before any tag/Release. Triage/accept or fix the three P2 limitations and preserve third-party notices. R2 initial review and R3 setting/entry now pass within their stated limits. Change this decision only with actual evidence; conditional Phase 09 authorization does not waive the remaining gates.
+Docker acceptance and necessary CI now pass for 7fad8be. Resolve the concrete FP07A-002 core warning gate within authorized scope, preserve precision safety and third-party notices, review the final diff and require its exact commit CI before tagging. Never turn the checklist READY solely by editing its label. No prior tag may be overwritten and no Docker Hub publication is authorized.

@@ -6,7 +6,9 @@
 
 FlowPilot 让你通过节点与连线建立自动化流程，在自己的机器上执行任务，并用 SQLite 保存工作流、排程状态和执行历史。它优先保持架构简单、运行方式清晰，同时为未来可选的 AI Provider 扩展预留接口。
 
-**v0.1.0 定位为早期公开版本候选。** 源码公开与正式版本发布分开验收；最新构建、容器验证及发布状态，请查看 [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions)、[发布清单](docs/RELEASE_CHECKLIST.md)和[项目状态](docs/PROJECT_STATUS.md)。这不是企业级稳定性或长期兼容性承诺。
+**v0.1.0 正在准备早期公开发布。** 后端、前端及隔离 Docker 验收已于 2026-10-30 在 [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) 通过；正式发布仍须确认 tag 对应提交的 CI。最新状态请查看[发布清单](docs/RELEASE_CHECKLIST.md)和[项目状态](docs/PROJECT_STATUS.md)。`v0.1.x` 的 API 与工作流格式仍可能调整，没有企业级稳定性或长期兼容性承诺。
+
+Docker 验收涵盖 Ubuntu 24.04 CI 上的镜像构建、启动、API 代理、手动执行与历史，以及后端重启／重建后的 SQLite 数据保留和排程恢复。本机 Windows 没有 Docker Engine，其他主机平台与架构未验证。
 
 ## 已实现功能
 

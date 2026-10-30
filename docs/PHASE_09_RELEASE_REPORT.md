@@ -1,120 +1,93 @@
 # FlowPilot v0.1.0 — Final Release Report
 
-Verification date: **2026-10-30 (Asia/Shanghai)**. This records an attempted final acceptance, not a published release.
+Verification date: **2026-10-30 (Asia/Shanghai)**. This is the acceptance record frozen before tag creation. Actual final commit, tag, Release URL and publication result must be verified after publication and recorded in the execution summary or a subsequent documentation commit; the released tag must never be moved to add that report.
 
 ## Release Status
 
-**RELEASE_PARTIALLY_COMPLETED. Formal-release readiness: NOT_READY.** The user explicitly requested publishing the complete reviewed source now, separately from the formal release gates. This source commit publishes the application, tests, examples, deployment configuration and documentation to the Public repository. Docker runtime acceptance and exact-commit remote CI must still be established before a v0.1.0 tag/GitHub Release. No image publication is authorized. The product source, dependencies and user data remain unchanged by the source-upload preparation.
-
-## Verified Source Upload and Follow-up Acceptance
-
-Complete source was pushed normally to main as **8847cf3605cc2a3dbcf3d6c892b6b5960609d232** (194 files). Its [remote CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40920568507) passed backend, frontend and both Docker image builds. The repository tree and rendered README were verified on GitHub.
-
-Commit 679d2f4 added scripts/verify_docker.py and one step to the same read-only CI. Its [runtime attempt](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40921193492) reached real container health, proxy/API, manual execution/history and enabled-schedule checks, then failed because the runner's Compose start command does not support --wait. The follow-up removes that unsupported flag; the existing health wait and persistence assertions remain. A passing full runtime result is required before release.
-
-A public isolated clone of 679d2f4 matched its 195-file tree and passed locked offline npm ci, TypeScript and production build; no runtime data or local artifacts were tracked. Traditional/Simplified Chinese READMEs and GitHub About descriptions were added at the user's request. The product app and lockfiles were not changed; the existing CI was deliberately extended for deployment verification.
-
-The remaining tables preserve the earlier acceptance snapshot where indicated. Exact subsequent source/CI commits are available in the repository history and execution report; no old successful run is used to certify a newer commit.
+**RELEASE_PARTIALLY_COMPLETED. Formal-release acceptance: NOT_READY.** Complete source is public and local regression and remote container acceptance pass. No unresolved P0 or release-blocking P1 is known from the scoped audit, but final review confirms FP07A-002 affects core Dashboard/Open discovery when a backend-valid unsafe-integer configuration is imported through the API. Phase 09 requires READY_WITH_WARNINGS limitations not to affect core functionality; disclosure and a P2 label alone do not waive that condition. A minimal fix is being prepared for review in an isolated local proposal. Applying it requires a narrow exception to the current AGENTS rule against frontend changes. No tag, Release or image publication is claimed.
 
 ## Release Identity
 
-| Field | Actual status |
+| Field | Verified state at freeze |
 | --- | --- |
-| Release version | Candidate v0.1.0, unreleased |
-| Verified GitHub account | [AndyLamyinwik](https://github.com/AndyLamyinwik), confirmed by the authenticated connector and supplied by the user |
-| Repository name/ID | AndyLamyinwik/FlowPilot, ID 1438711382 |
-| Verified repository URL | [https://github.com/AndyLamyinwik/FlowPilot](https://github.com/AndyLamyinwik/FlowPilot) |
-| Repository visibility/default branch | Public; main contains the reviewed complete source |
-| Repository creation | Completed after explicit consent to the ChatGPTBot connection; UI and connector verified |
-| Release URL | None; no Release created |
-| Commit SHA/branch | main; exact source commit and subsequent CI results are recorded in the execution report and [commit history](https://github.com/AndyLamyinwik/FlowPilot/commits/main) |
-| Git tag | Intended v0.1.0; not created. git ls-remote succeeded with no branch/tag refs. |
-| Release date | Not released; verification date above is not a release date |
-| Remote CI | Pending verification for the pushed source commit; local checks are not remote results |
+| Version | 0.1.0, Early Public Release preparation |
+| Repository | [AndyLamyinwik/FlowPilot](https://github.com/AndyLamyinwik/FlowPilot), ID 1438711382, Public |
+| Branch | main; complete reviewed source, tests, examples, configuration and documentation |
+| Accepted runtime commit | [7fad8be8c7cf368c3a2dc418856d13f61c565a75](https://github.com/AndyLamyinwik/FlowPilot/commit/7fad8be8c7cf368c3a2dc418856d13f61c565a75) |
+| Accepted CI | [Run 40922436437](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437), all three jobs and all required steps successful |
+| Final release commit | The final documentation commit must independently pass the same CI; the execution summary records its exact SHA |
+| Tag / Release | v0.1.0 / FlowPilot v0.1.0 — Initial Public Release; not yet created at this freeze |
+| Release date / URL | Record the actual publication result after creation; this verification date is not proof of publication |
 
-## GitHub Verification and Completed Setup
+## Source Upload and Acceptance History
 
-At initial acceptance the local directory had no .git, and the intended remote lookup returned 404. The gh executable is unavailable; the authenticated connector confirmed login AndyLamyinwik instead. After the user separately authorized creation and the auto-selected ChatGPTBot connection, GitHub created the exact Public target above. The UI showed the empty-repository setup page and installation notice; get_repo confirmed the ID, owner, visibility, main default branch and size 0.
+- Initial complete source was normally pushed as **8847cf3605cc2a3dbcf3d6c892b6b5960609d232**, 194 files. Its [CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40920568507) passed backend, frontend and both Docker builds.
+- Commit **679d2f4b3a1a18e9582b52f1c8e94b2b23b6f285** added the isolated Docker verification script and one step to the existing read-only CI. Its [attempt](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40921193492) passed startup, API, execution/history and schedule enablement, then failed because Compose start does not support --wait. That failed attempt is retained, not relabeled as successful.
+- Commit **7fad8be8c7cf368c3a2dc418856d13f61c565a75** removed only that unsupported flag, retaining health/persistence assertions. Its [CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) passed **Backend tests**, **Frontend checks**, and **Docker build and acceptance**, including the complete runtime step. The Docker log explicitly reports PASS for startup, proxy/API, execution/history, persistent data, restart and schedule recovery.
+- The public tree contains **197 tracked files**, including English, Traditional Chinese and Simplified Chinese introductions. GitHub About was updated with the same three languages at the user's request. A public isolated clone of 679d2f4 matched all 195 files at that commit and passed locked offline npm ci, typecheck and production build with unchanged lockfile and clean tracked working tree. Later additions are Chinese documentation and the smoke-test compatibility correction.
 
-Repository metadata reports admin/maintain/push=true. A separate collaborator-permission endpoint returned 403 Resource not accessible by integration; that endpoint is not misreported as a successful check. No write/push/Release permission test was attempted. Git ls-remote --heads --tags against the verified clone URL exited 0 with no refs, confirming no existing remote commit/tag at this check. Recheck before any eventual push.
+## Tests and Deployment Evidence
 
-Local Git was initialized with initial branch main and origin set to the verified clone URL. The initial manifest explicitly lists 194 files, excluding local tools/environments, caches/builds, runtime data, logs and credentials. Those exact paths were staged using --pathspec-from-file/--pathspec-file-nul, without an unconditional git add command over the directory. Staged blobs were checked against the reviewed files. The user then explicitly requested immediate complete source upload; this authorizes source commit/push without waiving formal tag/Release acceptance. No prior history was overwritten or force-pushed.
-
-Private Vulnerability Reporting was separately approved by the user and enabled in GitHub. The settings UI confirmed Repository settings saved and showed Disable private vulnerability reporting. The public anonymous advisory page exposes Report a vulnerability, linking to /security/advisories/new. Owners see New draft security advisory instead, consistent with [GitHub's reporting instructions](https://docs.github.com/en/code-security/how-tos/report-and-fix-vulnerabilities/report-privately). No test report/advisory or notification was sent, so delivery is NOT_TESTED. SECURITY now gives the verified private route without inventing an email or SLA.
-
-Initial automatic approval reviews rejected the App connection and private-reporting permission changes. Each rejection was resolved by specific subsequent user consent before retrying; no alternate endpoint, workaround or account-wide permission change was used. No other scanning, AI or autofix settings were enabled. Repository creation does not satisfy or override the remaining Docker and CI gates.
-
-## Final Tests
-
-| Check | Status | Actual result |
+| Check | Status | Actual evidence / scope |
 | --- | --- | --- |
-| Backend full Pytest | PASS | **796 passed in 10.50s**, including Engine, Executors, API, Scheduler, History, AI Mock and release examples |
-| Frontend Vitest | PASS | **274 passed**, 19 files, reported test duration 23.94s |
-| Production frontend server | PASS | **12 passed**, 0 skipped |
-| TypeScript | PASS | tsc --noEmit |
-| Production build | PASS | 197 modules, reported Vite build 1.69s |
-| Default Compose config | PASS | standalone Compose 5.6.0 config --quiet |
-| Example-env Compose config | PASS | same validation with --env-file .env.example |
-| Existing CI syntax | PASS | actionlint 1.7.12; ShellCheck/Pyflakes not executed |
-| Explicit initial staged-source review | PASS | 194 paths exactly match manifest/reviewed bytes; 24 ignore-rule probes pass, all 8 screenshots visually checked, no unresolved suspected real credential |
-| Initial-import Git whitespace check | FAIL | git diff --cached --check exits 2: 482 notices in 16 paths, primarily existing CRLF text plus extra EOF blank lines. Formatting-only result, not a failed product test; retained without changing protected LICENSE/source/dependency bytes. |
-| Final source/docs verification | PASS | 183 candidate text files, 14 Markdown files, 89 relative links; no UTF-8 errors, broken links or unclosed fences; 117 protected hashes and 107 runtime source paths unchanged |
-| Docker build/startup/recreation | NOT_TESTED | **DOCKER_NOT_TESTED**: no Docker CLI/Engine pipe or installation found in standard checked paths |
-| Container SQLite persistence/permissions and scheduler recovery | NOT_TESTED | Native process tests from prior phases do not satisfy container acceptance |
-| Remote GitHub Actions for release commit | NOT_TESTED | No candidate commit pushed; no passing remote check claimed |
-| Published-source verification | Pending | Check the pushed main commit/tree and README after upload; formal tag/Release is not yet created |
+| Local complete backend suite | PASS | **796 passed in 10.50s**, including Engine, Executors, API, Scheduler, History, AI Mock and release examples |
+| Local frontend unit/component suite | PASS | **274 passed**, 19 files |
+| Local production frontend server | PASS | **12 passed**, 0 skipped |
+| Local TypeScript / production build | PASS | tsc --noEmit; 197 modules built |
+| Compose default / example environment | PASS | Both standalone Compose 5.6.0 config checks |
+| Workflow syntax | PASS | actionlint 1.7.12; ShellCheck/Pyflakes were not run locally |
+| Remote locked installations and regression | PASS | Exact 7fad8be run: backend and frontend jobs, including dependency/syntax, typecheck, tests and build |
+| Remote Docker image builds | PASS | Both production images built on GitHub Ubuntu 24.04 |
+| Remote startup / frontend / API | PASS | Fresh isolated Compose project; backend and frontend proxy health plus production HTML |
+| Remote execution / history | PASS | Real manual example imported, validated and successfully executed; matching history and default no-output persistence |
+| Remote SQLite write / persistence / permissions | PASS | Fresh runner-only bind directory; workflow, history and schedule metadata survive backend stop/start and forced container recreation |
+| Remote scheduler recovery | PASS | Explicitly enabled future UTC schedule survives both restarts, scheduler remains enabled, no historical execution is replayed; schedule disabled before cleanup |
+| Local Docker runtime | NOT_TESTED | Docker CLI/Engine unavailable on the Windows workstation; remote Linux acceptance does not certify this local host or every platform |
+| Initial staged-source review | PASS | 194 explicit files, 183 text files, 8 visually inspected JPEGs, 3 placeholders and 24 ignore probes; no unresolved suspected real credential |
+| Initial-import whitespace check | FAIL (format only) | Existing CRLF/EOF formatting produced 482 notices in 16 files. Product tests passed; protected source/LICENSE/dependency bytes were preserved. Later targeted changes pass diff --check |
+| Private vulnerability reporting | PASS | Explicitly approved, enabled setting and public reporting entry verified |
+| Report submission / notification delivery | NOT_TESTED | No fake vulnerability/advisory was submitted |
 
-The first production-server test attempt failed under the sandbox with loopback EACCES. Its failure log was retained; an approved execution allowing local test sockets passed all 12 tests. No source modification or weaker security setting was used to obtain the passing result.
+The first local production-server test attempt encountered sandbox loopback EACCES. The retained failure was followed by an approved local-socket execution passing all 12 tests; no weaker security setting or source modification was used.
 
-Commands executed:
+The Docker smoke script uses a unique CI project and temporary data directory. It checks loopback bindings and the isolated mount before startup, verifies fresh and recovered state, and cleans up only its own project without down -v. The user's data/flowpilot.db remains the original 0-byte file. A passing remote container test does not imply distributed, exactly-once or public-service guarantees.
 
-```powershell
-# backend/
-.\.venv\Scripts\python.exe -m pytest -q --tb=short --basetemp=.pytest_cache/phase09-final
+## Gate Assessment
 
-# frontend/; existing local npm CLI, no dependency installation
-node .tools/npm11/package/bin/npm-cli.js test
-node .tools/npm11/package/bin/npm-cli.js run test:server
-node .tools/npm11/package/bin/npm-cli.js run typecheck
-node .tools/npm11/package/bin/npm-cli.js run build
-
-# repository directory
-.\.tools\compose\docker-compose.exe config --quiet
-.\.tools\compose\docker-compose.exe --env-file .env.example config --quiet
-.\.tools\phase07b-ci\actionlint-1.7.12\actionlint.exe -shellcheck= -pyflakes= .github/workflows/ci.yml
-```
-
-## Security, License and Version
-
-- Bounded candidate-source pattern/path review found no unresolved suspected real credentials or unexpected sensitive candidate paths. Additional credential-like URL/field matches were inspected using masked values and confirmed as existing rejection, redaction or sanitization test fixtures. No secret values were printed. This is not complete secret detection or a full private-hostname scan.
-- **Initial candidate review passed:** 194 explicit paths, 183 text files, 8 JPEG screenshots and 3 .gitkeep placeholders. Bounded scanning/visual checks found no unresolved suspected real credential or private artifact. All staged blobs equal the reviewed files; 24 ignore probes passed. No prior local commits or remote refs exist at this check. Recheck modified staged files and the remote before eventual commit/push. An ignore file alone cannot prove content is clean; no history rewrite was attempted.
-- 117 protected files matched the retained pre-preparation hashes, including original MIT LICENSE, application sources, dependency/lockfiles, Compose/CI and the 0-byte user database. Tests use isolated data. Local environments, builds, caches, logs and tools were retained and must not be uploaded as an unfiltered archive.
-- Incoming ports remain loopback-only. Exact inbound Host policy and separate default-empty outbound allowlist remain; HTTP/Webhook DNS/IP, target pinning, HTTPS, redirect/proxy, timeout and size controls are unchanged. No complete SSRF guarantee is made.
-- History output storage remains false by default; optional basic redaction cannot identify all secrets. README and Release Notes explicitly warn against public exposure of the unauthenticated service.
-- One read-only CI workflow remains, with persisted checkout credentials disabled and full Action SHAs matching retained official verification. Local validation is not remote CI.
-- Backend package, FastAPI app, frontend package and package-lock application version all remain **0.1.0**. Workflow Definition schema remains 1. No existing tag was replaced or force-pushed.
-- MIT text and copyright holder are unchanged. The bounded direct-license review from Phase 08B is retained; no full legal/transitive/container audit is claimed.
-- AI has one offline Mock implementation only, disabled by default as a workflow capability. There are no live OpenAI/Claude/Gemini/Ollama calls, AI nodes, model downloads or public AI API.
-
-## Remaining Release Blockers
-
-| ID | Status | Required next step |
+| Gate | Status | Evidence / remaining condition |
 | --- | --- | --- |
-| R1 Docker runtime acceptance | NOT_TESTED | Provide a working Docker Engine host; build and start an isolated instance, test frontend/API health, container recreation, SQLite permissions/persistence and scheduler recovery without deleting user volumes. |
-| R2 Repository/source identity and initial candidate review | PASS | Target/Public/owner/main and empty refs verified; metadata reports admin/push rights. Exact 194-file manifest, staged bytes, ignore rules and screenshot/source review passed. Recheck changed files and target refs/protection before eventual commit/push; no substitute repository. |
-| R3 Private security reporting setting/entry | PASS | Explicitly authorized and enabled; setting and public entry verified. No report submitted; actual notification delivery remains NOT_TESTED. |
-| R4 Candidate commit remote CI | NOT_TESTED | After pre-push gates pass, commit only reviewed files and push normally, then require the necessary jobs for that exact SHA before tagging or releasing. |
+| R1 — Docker deployment | PASS | Real image builds, startup, proxy/API, stop/start, recreation, persistent data and scheduler recovery in exact 7fad8be CI |
+| R2 — Repository/source identity | PASS | Verified owner, Public target and main; normal pushes succeeded; bounded reviewed source/history/artifact checks found no unresolved suspected real secret; no force push or history rewrite |
+| R3 — Private reporting route | PASS | Enabled after explicit user consent; anonymous public advisory page links to the real private reporting route; SECURITY agrees |
+| R4 — Necessary remote CI | PASS for 7fad8be | Every necessary job passed for that exact SHA. A final documentation commit must pass its own CI before tagging; old success cannot certify it |
+| P0 / P1 | PASS within scoped review | No unresolved P0 or release-blocking P1 identified; previously fixed history identity and Host-boundary issues remain covered |
+| Core warning assessment | BLOCKED | FP07A-002 rejects the whole Dashboard/Open list, not only the unsafe workflow; it does not meet the literal non-core-impact condition for READY_WITH_WARNINGS |
+| Version / license / AI accuracy | PASS | Backend/FastAPI/frontend/lockfile agree at 0.1.0; schema remains 1; original MIT LICENSE retained; offline Mock only |
 
-No new P0/P1 was confirmed by this bounded review. Existing FP07A-002, FP07A-003 and FP07A-004 P2 issues remain documented and need maintainer triage; passing tests do not erase them.
+The remaining P2 limitations are assessed individually, not silently marked fixed:
 
-## Known Limitations
+- **FP07A-002:** API-imported config containing integers beyond browser safe precision can reject the workflow list. The current editor rejects such values; use strings for large identifiers or open an unaffected workflow directly by ID. Ordinary supported-editor save/open and release examples pass. This is a disclosed interoperability edge case, not a confirmed security or data-loss issue.
+- **FP07A-003:** After a node is deleted, a retained in-memory execution panel can show the previously selected node. Original results remain available; clear canvas selection or use independent History Detail. Stored history is unaffected.
+- **FP07A-004:** A manually supplied history offset beyond SQLite int64 returns a controlled generic 500 instead of 422. Normal UI pagination and subsequent health work; no stack/secret exposure was observed.
 
-No built-in authentication; local/trusted deployment only. SQLite and one backend/scheduler owner, no distributed execution or Exactly-Once guarantee. Execute is synchronous, without cancellation/live node streaming. History is bounded and not a complete workflow snapshot. AI is Mock-only. The three known P2 limitations concern large-integer workflow listing, deleted-node stale result selection and extreme history offsets. See the [audit](PHASE_07A_AUDIT.md) and [draft release notes](releases/v0.1.0.md).
+See the [original audit](PHASE_07A_AUDIT.md). FP07A-002 is a formal-release blocker under the original acceptance rule despite its workaround. FP07A-003/004 are localized edge cases with independent History Detail and normal UI pagination workarounds; they have no identified storage/security impact. The smallest safe list-isolation correction should retain the strict edit/round-trip precision guard. The source remains available while formal release awaits this correction and exact-final-commit CI.
 
-## Publication and Recovery
+## Security, Scope and Repository Verification
 
-The user's later explicit source-upload instruction supersedes the earlier pre-push gate: complete reviewed source may be committed and pushed now. This does not authorize claiming unperformed Docker checks passed, tagging an unverified commit or publishing a formal v0.1.0 Release. Do not change the [checklist](RELEASE_CHECKLIST.md) to READY without evidence. Source can be cloned from main; the versioned release remains a separate acceptance decision.
+The authenticated connector and browser confirmed AndyLamyinwik, the exact repository, Public visibility and administrative/push metadata; actual normal source pushes confirm write capability. gh is unavailable, so no fictional gh auth success is reported. A separate collaborator-permission endpoint returned integration-scope 403; that result is preserved as a limitation. Release creation and tag permissions must be established by their actual successful operations.
 
-Verify the pushed source and exact-SHA CI. Docker-capable CI may perform isolated container acceptance; local Compose parsing alone does not satisfy R1. Only after all formal-release gates pass may an absent annotated v0.1.0 tag be created, its remote commit verified, and a Release created from reviewed notes. Never overwrite a tag or revise a published tag merely to add this report. The local standalone Compose engine probe failed because docker_engine was unavailable; no passing local Docker runtime result is claimed.
+Repository creation with the ChatGPTBot auto-connection and Private Vulnerability Reporting were each separately approved by the user after initial review rejections. Those precise settings were applied and verified; no other scanning, AI/autofix, account permission or visibility change was made. The public [advisory page](https://github.com/AndyLamyinwik/FlowPilot/security/advisories) exposes the private route documented in SECURITY; owner/reporter UI differences follow [GitHub's instructions](https://docs.github.com/en/code-security/how-tos/report-and-fix-vulnerabilities/report-privately).
 
-Ignored local evidence is under .tools/phase09/ (backend/frontend logs, configuration results, redacted security review and browser-form screenshots). It is not a release artifact. Do not upload the full working directory. Stop here; no v0.2.0 work is authorized.
+Bounded source/path/pattern and screenshot review found no unresolved suspected real credentials or unexpected sensitive tracked artifacts. Credential-like test values were reviewed with masked values as validation/redaction fixtures. The finite review is not proof of complete secret detection, a container CVE scan or a full legal/transitive dependency audit. The initial Git history contained no prior commits; subsequent commits contain reviewed release/CI/documentation changes only. Local .env, SQLite/journals, environments, dependencies, builds, logs, caches, tools and keys remain excluded.
+
+Of the **117 protected baseline files**, **116 remain byte-identical**, including product source, original LICENSE, dependencies/locks, Compose and the user database. The one deliberate exception is the existing CI file, extended with isolated deployment verification. The added script contains test orchestration only; the Engine, Scheduler, API/Schema and frontend behavior are unchanged. All **107 runtime source paths** retain their bytes. Direct dependency license declarations reviewed in Phase 08B are preserved; no dependency upgrades were made.
+
+Default ports remain loopback-only. Exact inbound Host checks and the separate empty outbound allowlist, HTTPS, DNS/address validation and pinned target, disabled redirects/environment proxy, time and size limits remain in place. No complete SSRF guarantee is made. History output storage defaults to false; optional basic redaction cannot recognize every secret. There is no built-in authentication: **do not expose the unauthenticated service directly to the public Internet**.
+
+AI consists of provider contracts, a registry and one offline Mock. There are no real OpenAI/Claude/Gemini/Ollama integrations, AI executors, SDKs, model downloads or public AI endpoints. No prompt/model-generated action gains shell, filesystem, database or scheduler authority.
+
+## Publication Sequence and Recovery
+
+After the final reviewed documentation commit is normally pushed, inspect its own completed CI. Only then, recheck that v0.1.0 does not already exist, create an annotated tag pointing to that exact successful commit, push the single tag normally and verify its remote peeled commit. Create the GitHub Release with the reviewed [release notes](releases/v0.1.0.md), then verify the public Release, tag, source, README/LICENSE/examples and links. If any operation fails, preserve successful steps and report the actual partial state; never overwrite a tag or bypass CI/protection.
+
+The final operation summary must record the actual release commit SHA, CI URL, tag target, Release URL and publication date. A subsequent documentation-only maintenance commit may record publication without moving the released tag. Ignored evidence remains in .tools/phase09 and is not a release asset. Stop after Phase 09; no Docker Hub image or v0.2.0 development.

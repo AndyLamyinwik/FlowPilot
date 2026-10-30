@@ -1,6 +1,6 @@
 # Changelog
 
-Changes are grouped by candidate version. This file describes source preparation, not a published artifact. No release date, Git tag, or GitHub Release has been established.
+Changes are grouped by version. The v0.1.0 entry records release preparation verified on 2026-10-30; publication status is recorded in the [release checklist](docs/RELEASE_CHECKLIST.md).
 
 ## [Unreleased]
 
@@ -15,9 +15,9 @@ Changes are grouped by candidate version. This file describes source preparation
 - Complete reviewed source, tests, examples and documentation published to the Public FlowPilot repository under the user's explicit source-upload authorization. Formal v0.1.0 release acceptance remains separate.
 - Private vulnerability reporting enabled. The saved setting and public reporting entry were verified on 2026-10-30; no test report/advisory was submitted or notification delivery tested.
 
-## [0.1.0] — Unreleased Candidate
+## [0.1.0] — Release preparation (2026-10-30)
 
-Target: **Early Public Release**, local-first and self-hosted. The entries below describe implemented candidate behavior, not a claim that release gates have passed.
+Target: **Early Public Release**, local-first and self-hosted. Backend, frontend, and real Docker acceptance passed for commit `7fad8be8c7cf368c3a2dc418856d13f61c565a75` in [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437). The exact final release commit must also pass CI before tagging.
 
 ### Added
 
@@ -27,8 +27,8 @@ Target: **Early Public Release**, local-first and self-hosted. The entries below
 - Seven implemented node types: Manual Trigger, Schedule Trigger, HTTP Request, Condition, Transform, Outgoing Webhook, and Logger.
 - Single-instance Cron scheduling, enable/disable controls, timezone configuration, and backend-reported next-run times.
 - Execution results, node status displays, paginated history, details, and interrupted-record recovery without automatic replay.
-- Docker Compose definitions for two loopback-bound services, persistent SQLite data, and application health checks. Container build/startup/recreation remain unverified in the current environment.
-- A single GitHub Actions workflow for backend tests, frontend checks, and Docker configuration/build checks. Remote execution remains unverified.
+- Docker Compose definitions for two loopback-bound services, persistent SQLite data, and application health checks. Linux CI verified image builds, startup, API proxy connectivity, execution/history, and persistence/schedule recovery after restart and recreation.
+- A single GitHub Actions workflow for backend tests, frontend checks, Docker configuration/image builds, and isolated runtime acceptance, with read-only permissions and pinned Action commits.
 - Independent text AI request/response contracts, synchronous provider interface, explicit registry, safe errors, and an offline Mock Provider. No real AI integration is included.
 
 ### Changed
@@ -53,7 +53,7 @@ Target: **Early Public Release**, local-first and self-hosted. The entries below
 - SQLite persistence and a single-instance scheduler; no distributed execution or Exactly-Once guarantee.
 - Synchronous Execute has no live node streaming or cancellation API. A lost connection can leave the outcome unknown; automatic retry is unsafe.
 - No live AI provider integrations, AI workflow nodes, tool calling, or model execution.
-- Docker build/startup/container recreation and remote CI must still be verified before release.
+- Docker runtime acceptance covers Ubuntu 24.04 CI. The local Windows machine has no Docker Engine; other host platforms and architectures were not verified.
 - Private vulnerability reporting verification covers the enabled setting and public entry only; end-to-end submission, notification delivery, and actual receipt were not tested.
 - Three recorded P2 issues remain: a browser-unsafe integer in one workflow can block the workflow list; stale execution details can be affected by canvas node selection after deletion; an extreme history offset can produce a controlled 500 rather than 422.
 - Historical node IDs truncated by an older implementation cannot be reliably reconstructed. History is not a full workflow snapshot, and basic redaction cannot identify all secrets in text.

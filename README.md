@@ -6,13 +6,13 @@ Lightweight, self-hosted workflow automation. AI-ready by design.
 
 FlowPilot lets you build and run node-based automation workflows in a visual editor. It stores workflows and execution history in SQLite and runs on your own machine with a single backend process.
 
-**Candidate version: v0.1.0 — Early Public Release, not yet released.** Release preparation is **NOT_READY**: Docker build/startup/recreation and remote GitHub Actions still need verification. See the [release checklist](docs/RELEASE_CHECKLIST.md). This is an early development version, not an enterprise stability or long-term compatibility promise.
+**v0.1.0 — Early Public Release preparation.** Backend, frontend, and isolated Docker acceptance passed in [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) on 2026-10-30. Publication still requires passing CI for the exact tagged commit; see the [release checklist](docs/RELEASE_CHECKLIST.md) for the final decision. This is an early development version, not an enterprise stability or long-term compatibility promise.
 
-The [project repository](https://github.com/AndyLamyinwik/FlowPilot) contains the application source, tests, workflow examples, and documentation. A published GitHub Release and a `v0.1.0` tag are not yet available.
+The [project repository](https://github.com/AndyLamyinwik/FlowPilot) contains the application source, tests, workflow examples, and documentation. Versioned publications appear on the [GitHub Releases page](https://github.com/AndyLamyinwik/FlowPilot/releases).
 
 ## Features
 
-Implemented and covered by local tests:
+Implemented and covered by automated tests:
 
 - Visual workflow editor with drag-and-drop nodes, connections, configuration, and explicit saving.
 - Dashboard for creating, opening, and deleting workflows.
@@ -27,7 +27,7 @@ Implemented and covered by local tests:
 - Production frontend assets with a same-origin API proxy.
 - An optional AI Provider interface, schemas, registry, and offline Mock Provider.
 
-Docker Compose packaging is implemented and its configuration is validated; **container builds, startup, and recreation have not been verified in the current environment** (`DOCKER_NOT_TESTED`). Real OpenAI, Anthropic/Claude, Gemini, and Ollama model integrations are not included. There are no AI workflow nodes.
+Docker Compose image builds, startup, API proxy connectivity, manual execution/history, SQLite persistence, and schedule recovery after backend restart and recreation passed on the Ubuntu 24.04 GitHub Actions runner. This does not certify every host platform. Real OpenAI, Anthropic/Claude, Gemini, and Ollama model integrations are not included. There are no AI workflow nodes.
 
 ## Screenshots
 
@@ -65,7 +65,7 @@ docker compose up -d --build --wait
 
 On Windows PowerShell, use `Copy-Item .env.example .env`. Preserve an existing `.env` and merge settings instead of overwriting it. No API key is required.
 
-This is the intended Docker setup, not a claim that it passed runtime verification. If Docker Engine is unavailable, use the [native development setup](CONTRIBUTING.md#development-setup). It requires Python 3.12+, Node.js 24.15+ within 24.x, and npm 11 or 12; the recorded npm version is 11.21.1.
+The isolated Linux CI acceptance uses this Compose setup with a temporary data directory. If Docker Engine is unavailable, use the [native development setup](CONTRIBUTING.md#development-setup). It requires Python 3.12+, Node.js 24.15+ within 24.x, and npm 11 or 12; the recorded npm version is 11.21.1.
 
 ### Access
 
@@ -202,13 +202,13 @@ npm run typecheck
 npm run build
 ```
 
-The single [GitHub Actions workflow](.github/workflows/ci.yml) covers backend, frontend, and Docker configuration/build jobs, with read-only contents permission and verified full Action commit SHAs. Local validation and remote execution are tracked separately. Remote CI has not yet run; no passing badge or release automation is implied. Current commands and evidence are recorded in the [release checklist](docs/RELEASE_CHECKLIST.md) and [project status](docs/PROJECT_STATUS.md).
+The single [GitHub Actions workflow](.github/workflows/ci.yml) covers backend tests, frontend checks, Docker configuration/image builds, and isolated startup/persistence/recovery acceptance, with read-only contents permission and verified full Action commit SHAs. The [verified CI run](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) passed for commit `7fad8be8c7cf368c3a2dc418856d13f61c565a75`; newer commits require their own passing runs. Local validation and remote execution are tracked separately. Current commands and evidence are recorded in the [release checklist](docs/RELEASE_CHECKLIST.md) and [project status](docs/PROJECT_STATUS.md). The workflow does not publish releases or images.
 
 ## Troubleshooting
 
 | Problem | Check |
 | --- | --- |
-| Docker build or startup fails | Confirm Engine/Desktop is running; inspect Compose config and logs. A standalone Compose CLI is not a Docker Engine. Docker runtime verification is still pending. |
+| Docker build or startup fails | Confirm Engine/Desktop is running; inspect Compose config and logs. A standalone Compose CLI is not a Docker Engine. The recorded runtime acceptance covers the GitHub Actions Linux runner. |
 | Backend unavailable | Check `/api/health`, logs, database path/permissions, and whether another backend owns the database lock. |
 | Frontend cannot connect | Confirm backend health, same-origin `/api`, and server-side proxy target. Rebuild after changing `VITE_API_BASE_URL`; absolute API URLs also need suitable CORS/Host settings. |
 | Refreshing an editor URL fails | Use the production server with `dist/index.html`; it supports `/editor?id=<UUID>` directly. Do not serve the source directory as production assets. |
@@ -225,7 +225,7 @@ The single [GitHub Actions workflow](.github/workflows/ci.yml) covers backend, f
 - Execution results arrive synchronously, without WebSocket node-progress streaming or cancellation API.
 - Desktop editor first; narrow screens use a horizontally scrollable workspace. No Undo/Redo or persistent browser draft recovery.
 - Three known P2 issues remain: a backend-valid large integer can block the workflow list; a stale result may not show a deleted node's details while another canvas node is selected; and an extreme history offset returns 500. See the [audit](docs/PHASE_07A_AUDIT.md) for details and workarounds.
-- Docker build/startup/recreation and remote CI are not yet verified. See the [release checklist](docs/RELEASE_CHECKLIST.md) for the remaining acceptance work before a tagged release.
+- Docker acceptance covers an isolated Ubuntu 24.04 CI environment. The local Windows development machine has no Docker Engine, so native Windows Docker execution and other host/architecture combinations were not verified.
 
 Version `0.1.x` is early development. API and workflow formats may evolve; `1.0.0` will require a separate stability decision. Existing compatibility is tested, but no long-term guarantee is promised.
 
@@ -237,7 +237,7 @@ Version `0.1.x` is early development. API and workflow formats may evolve; `1.0.
 - [Project status and test results](docs/PROJECT_STATUS.md)
 - [Release checklist](docs/RELEASE_CHECKLIST.md)
 - [Phase 09 final acceptance and publication status](docs/PHASE_09_RELEASE_REPORT.md)
-- [Draft v0.1.0 release notes](docs/releases/v0.1.0.md)
+- [v0.1.0 release notes](docs/releases/v0.1.0.md)
 - [Changelog](CHANGELOG.md)
 - [Phase 07A audit](docs/PHASE_07A_AUDIT.md)
 - [Phase 07B deployment verification](docs/PHASE_07B_RELEASE_READINESS.md)
