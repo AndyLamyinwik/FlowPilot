@@ -19,7 +19,7 @@ import ExecutionHistory from '../components/execution/ExecutionHistory'
 import ValidationPanel from '../components/execution/ValidationPanel'
 import ExecutionStatus from '../components/execution/ExecutionStatus'
 import SchedulePanel from '../components/schedule/SchedulePanel'
-import type { FlowEdge, FlowNode, JsonObject, NodeTypeMetadata, ValidationIssue, Workflow } from '../types/workflow'
+import type { FlowEdge, FlowNode, JsonObject, NodeTypeMetadata, ValidationIssue, Workflow, WorkflowSummary } from '../types/workflow'
 import { toReactFlow, toWorkflowDefinition } from '../utils/workflowAdapter'
 import { createFlowNode, validateConnection } from '../utils/workflowGraph'
 
@@ -47,7 +47,7 @@ function Editor({ initialWorkflowId }: { initialWorkflowId?: string | null }) {
   const [saveFailed, setSaveFailed] = useState(false)
   const [message, setMessage] = useState<{ kind: 'error' | 'info'; text: string } | null>(null)
   const [open, setOpen] = useState(false)
-  const [workflows, setWorkflows] = useState<Workflow[]>([])
+  const [workflows, setWorkflows] = useState<WorkflowSummary[]>([])
   const [listLoading, setListLoading] = useState(false)
   const [listError, setListError] = useState<string | null>(null)
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null)

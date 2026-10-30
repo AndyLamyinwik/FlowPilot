@@ -6,7 +6,7 @@
 
 FlowPilot 让你通过节点与连线建立自动化流程，在自己的机器上执行任务，并用 SQLite 保存工作流、排程状态和执行历史。它优先保持架构简单、运行方式清晰，同时为未来可选的 AI Provider 扩展预留接口。
 
-**v0.1.0 正在准备早期公开发布。** 后端、前端及隔离 Docker 验收已于 2026-10-30 在 [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) 通过；正式发布仍须确认 tag 对应提交的 CI。最新状态请查看[发布清单](docs/RELEASE_CHECKLIST.md)和[项目状态](docs/PROJECT_STATUS.md)。`v0.1.x` 的 API 与工作流格式仍可能调整，没有企业级稳定性或长期兼容性承诺。
+**v0.1.0 — 早期公开版本。** 后端、前端及隔离 Docker 验收已于 2026-10-30 在 [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) 通过；正式发布须确认 tag 对应提交的 CI。最新状态请查看[发布清单](docs/RELEASE_CHECKLIST.md)和[项目状态](docs/PROJECT_STATUS.md)。`v0.1.x` 的 API 与工作流格式仍可能调整，没有企业级稳定性或长期兼容性承诺。
 
 Docker 验收涵盖 Ubuntu 24.04 CI 上的镜像构建、启动、API 代理、手动执行与历史，以及后端重启／重建后的 SQLite 数据保留和排程恢复。本机 Windows 没有 Docker Engine，其他主机平台与架构未验证。
 
@@ -97,7 +97,7 @@ Compose 将本机 `./data` 挂载到后端 `/app/data`，保存 SQLite 数据。
 - 每个数据库只运行一个后端进程、一个 Uvicorn worker 和一个 Scheduler。没有分布式执行或跨进程 Exactly-Once 保证。
 - Execute 为同步请求，没有实时节点流或取消 API；关闭浏览器不会取消后端执行。
 - 历史不是完整的工作流快照，基础敏感字段遮罩也无法识别所有秘密；共享日志或结果前仍需检查。
-- 三项已知 P2 涉及大整数配置影响列表、删除节点后的旧结果选取及极端历史 offset。详见[审查记录](docs/PHASE_07A_AUDIT.md)。
+- 两项已知 P2 涉及删除节点后的旧结果选取及极端历史 offset。详见[审查记录](docs/PHASE_07A_AUDIT.md)。大整数配置不再阻挡工作流摘要列表；编辑该定义时仍保留严格的数值精度检查。
 
 报告漏洞请使用已启用的 [GitHub 私人漏洞回报入口](https://github.com/AndyLamyinwik/FlowPilot/security/advisories/new)，不要在公开 Issues 发布密钥或漏洞利用细节。详见 [SECURITY.md](SECURITY.md)；没有承诺响应时限或长期安全维护。
 

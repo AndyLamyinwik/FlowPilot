@@ -6,7 +6,7 @@
 
 FlowPilot 讓你透過節點與連線建立自動化流程，在自己的電腦上執行，並以 SQLite 保存工作流、排程狀態及執行歷史。架構預留 AI Provider 擴展位置，目前只有離線 Mock，使用基本功能不需要 API Key、付費服務或模型下載。
 
-**v0.1.0 正在準備早期公開發布。** 後端、前端及隔離 Docker 驗收已於 2026-10-30 在 [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) 通過；正式發布仍須確認 tag 對應提交的 CI。最新狀態請查看[發布清單](docs/RELEASE_CHECKLIST.md)及[專案狀態](docs/PROJECT_STATUS.md)。`v0.1.x` 的 API 與工作流格式仍可能調整，沒有企業級穩定性或長期相容性承諾。
+**v0.1.0 — 早期公開版本。** 後端、前端及隔離 Docker 驗收已於 2026-10-30 在 [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) 通過；正式發布須確認 tag 對應提交的 CI。最新狀態請查看[發布清單](docs/RELEASE_CHECKLIST.md)及[專案狀態](docs/PROJECT_STATUS.md)。`v0.1.x` 的 API 與工作流格式仍可能調整，沒有企業級穩定性或長期相容性承諾。
 
 Docker 驗收涵蓋 Ubuntu 24.04 CI 上的映像建置、啟動、API 代理、手動執行與歷史，以及後端重啟／重建後的 SQLite 資料保留和排程恢復。本機 Windows 沒有 Docker Engine，其他主機平台與架構未驗證。
 
@@ -100,7 +100,7 @@ Compose 將 `./data` 掛載至後端 `/app/data`。一般 stop／start 或重建
 
 目前僅有獨立的 Provider 契約、Registry 與 **MockAIProvider**；沒有真實 OpenAI、Claude、Gemini、Ollama 模型呼叫、AI 節點或公開 AI API。`FLOWPILOT_AI_ENABLED=true` 不會啟用真實模型。詳見 [AI Provider 指南](docs/AI_PROVIDER_GUIDE.md)。
 
-本版使用 SQLite 與單實例排程，不支援分散式執行、多人隔離或跨進程 Exactly-Once。同步 Execute 沒有取消 API 或即時節點串流。歷史不是完整工作流快照，基本遮罩也不能辨識所有敏感文字。另有三項已記錄 P2 限制，詳見[審查報告](docs/PHASE_07A_AUDIT.md)。
+本版使用 SQLite 與單實例排程，不支援分散式執行、多人隔離或跨進程 Exactly-Once。同步 Execute 沒有取消 API 或即時節點串流。歷史不是完整工作流快照，基本遮罩也不能辨識所有敏感文字。仍有兩項已記錄 P2 限制：刪除節點後的舊結果選取，以及極端歷史 offset，詳見[審查報告](docs/PHASE_07A_AUDIT.md)。大整數配置不再阻擋工作流摘要列表；編輯該定義時仍保留嚴格的數值精度檢查。
 
 ## 開發、文件與授權
 

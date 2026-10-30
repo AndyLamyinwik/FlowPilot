@@ -4,9 +4,9 @@ Verification date: **2026-10-30 (Asia/Shanghai)**. Version: **0.1.0, Early Publi
 
 ## Release Decision
 
-**NOT_READY for a formal tag/Release: FP07A-002 still affects core workflow discovery.** Complete reviewed source and English/Traditional/Simplified introductions are public. The exact [7fad8be commit CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) passed all backend, frontend and real Docker deployment checks. R1 and R4 are no longer environment blockers; local Windows Docker is still unavailable and is not claimed tested.
+**READY_WITH_WARNINGS for final commit/push and exact-commit CI.** Complete reviewed source and English/Traditional/Simplified introductions are public. The exact [7fad8be commit CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) passed all backend, frontend and real Docker deployment checks. The user then explicitly approved the narrow FP07A-002 frontend correction; it now passes 282 frontend tests, typecheck, build and real production browser/API verification. No tag/Release may be created until the final commit containing this fix passes its own necessary CI.
 
-The original Phase 09 READY_WITH_WARNINGS condition requires warnings not to affect core functionality, security or publication integrity. FP07A-002 can reject the whole Dashboard/Open list after a backend-valid unsafe-integer API import. A P2 label and workaround do not erase that impact. A minimal list-isolation correction is being prepared in an ignored proposal; applying frontend changes needs a narrow exception to the current AGENTS scope. Final exact-commit CI remains mandatory after any correction.
+FP07A-002 is fixed by separating read-only summaries from strict editor loads, preserving numeric precision safety. The two remaining P2 issues are localized stale-result selection after a graph edit and unsupported extreme pagination; independent historical detail, ordinary pagination, storage integrity and supported core flows remain available. These are disclosed non-blocking limitations, not silently fixed items. No maintainer decision remains pending. Local Windows Docker is still unavailable; real remote Linux container evidence is recorded separately.
 
 Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **BLOCKED**. No unresolved P0 or release-blocking P1 has been identified in the scoped review. No tag, Release or image publication is claimed at this freeze. See the [Phase 09 report](PHASE_09_RELEASE_REPORT.md).
 
@@ -18,7 +18,7 @@ Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **
 | R2 — Repository/source identity | PASS | Verified Public AndyLamyinwik/FlowPilot, main, normal source pushes and reviewed tree; bounded secret/artifact/screenshot review and ignore probes passed. Final changes must be rechecked before normal push. |
 | R3 — Private vulnerability reporting | PASS | Separately approved, enabled setting and public reporting entry verified; real route in SECURITY. Report submission/notification delivery NOT_TESTED. |
 | R4 — Remote GitHub Actions | PASS for 7fad8be | All three jobs and necessary steps passed for that exact SHA. Any final release commit must pass its own CI before tag creation; old successful runs cannot certify it. |
-| R5 — Core warning assessment | BLOCKED | FP07A-002 needs list isolation while preserving strict edit precision safety. FP07A-003/004 remain localized, disclosed limitations with unaffected independent History Detail / ordinary UI pagination. |
+| R5 — Core warning assessment | PASS with warnings | Authorized FP07A-002 fix verified by regression and real browser/API. FP07A-003/004 remain localized, disclosed limitations with unaffected independent History Detail / ordinary UI pagination. |
 
 ## Code
 
@@ -26,13 +26,13 @@ Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **
 | --- | --- | --- |
 | Core APIs, Engine, branches, Scheduler, persistence and AI Mock regression | PASS | Complete backend suite: **796 passed in 53.42s**; includes the existing 788 tests and 8 release-example tests. |
 | Backend API and execution behavior | PASS | CRUD, general validation versus strict readiness, HTTP 200 failed, skipped branches and history covered by existing and new tests. |
-| Frontend unit/component tests | PASS | **274 passed**, 19 files, 53.01s. |
+| Frontend unit/component tests | PASS | **282 passed**, 19 files, after the approved Phase 09 fix; earlier Phase 08B baseline was 274. |
 | Production frontend server tests | PASS | **12 passed**, 0 skipped. |
 | TypeScript check | PASS | npm run typecheck. |
 | Production frontend build | PASS | npm run build; 197 modules, no blocking error. |
 | AI Provider tests | PASS | Included in full backend run; Mock only, no real model request, SDK, key or model download. |
-| Product scope / protected files | PASS | 116 of 117 Phase 08B baseline hashes unchanged, including runtime source/LICENSE/dependencies/Compose/user DB. The single expected exception is the existing CI extended with isolated Docker acceptance; no product change applied at this freeze. |
-| Existing P2 resolution | FAIL | FP07A-002: large-integer config can block workflow lists; 003: deleted-node stale result selection; 004: extreme history offset returns controlled 500. These remain known limitations, not hidden passing claims. See the [audit](PHASE_07A_AUDIT.md). |
+| Product scope / protected files | PASS | 110 of 117 Phase 08B baseline hashes unchanged. Seven reviewed exceptions: existing CI extension and six explicitly approved frontend fix/test files. LICENSE/dependencies/Compose/backend/user DB remain unchanged. |
+| P2 triage | PASS with warnings | FP07A-002 fixed and verified. 003: stale deleted-node result selection; 004: unsupported extreme history offset returns controlled 500. The two localized limitations remain disclosed in the [audit](PHASE_07A_AUDIT.md) and release notes. |
 
 ## Docker
 
@@ -146,8 +146,8 @@ node .tools/npm11/package/bin/npm-cli.js run build
 
 The screenshot instance reused the existing production smoke harness in a new .tools/phase08b-* directory, with a new SQLite file and loopback-only Uvicorn/Node. Three example payloads were created through the real API; only the offline manual workflow was executed. Dashboard/editor/history screenshots reflect its actual successful record. A browser tool connection interruption was recovered before the History capture; no synthetic substitute was used. Temporary services were stopped and the test tab closed.
 
-Phase 08B local checks verified 13 Markdown files / 80 relative links and all 117 baseline hashes then unchanged. Phase 09 now retains 116 byte-identical baseline files and one reviewed CI extension. New document/link checks and exact-SHA evidence are recorded in the Phase 09 report; ignored .tools evidence is not a release asset.
+Phase 08B local checks verified 13 Markdown files / 80 relative links and all 117 baseline hashes then unchanged. Phase 09 now retains 110 byte-identical baseline files, one reviewed CI extension and six explicitly approved frontend correction/test files. New document/link checks and exact-SHA evidence are recorded in the Phase 09 report; ignored .tools evidence is not a release asset.
 
 ## Maintainer Review
 
-Docker acceptance and necessary CI now pass for 7fad8be. Resolve the concrete FP07A-002 core warning gate within authorized scope, preserve precision safety and third-party notices, review the final diff and require its exact commit CI before tagging. Never turn the checklist READY solely by editing its label. No prior tag may be overwritten and no Docker Hub publication is authorized.
+Docker acceptance and necessary CI pass for 7fad8be; the separately approved FP07A-002 core warning correction now passes local regression and actual integration. Preserve precision safety and third-party notices, review the final diff and require its exact commit CI before tagging. Never turn the checklist READY solely by editing its label. No prior tag may be overwritten and no Docker Hub publication is authorized.

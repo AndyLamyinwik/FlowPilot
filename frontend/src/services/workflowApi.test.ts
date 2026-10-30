@@ -32,7 +32,9 @@ describe('workflow API client', () => {
     } }
     const fetch = vi.fn().mockResolvedValueOnce(response([item])).mockResolvedValueOnce(response(item))
     vi.stubGlobal('fetch', fetch)
-    await expect(listWorkflows()).resolves.toEqual([item])
+    await expect(listWorkflows()).resolves.toEqual([{ ...item, definition: {
+      schema_version: 1, nodes: [{ id: 'future', type: 'custom.future', name: 'Future' }], edges: [],
+    } }])
     await expect(getWorkflow(workflow.id)).resolves.toEqual(item)
     expect(fetch.mock.calls[0][0]).toBe('/api/workflows')
     expect(fetch.mock.calls[1][0]).toBe(`/api/workflows/${workflow.id}`)
@@ -138,5 +140,47 @@ describe('workflow API client', () => {
     } }
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response(large)))
     await expect(getWorkflow(workflow.id)).rejects.toMatchObject({ status: 200, message: expect.stringContaining('outside the browser safe integer range') })
+  })
+
+  it.each(['9007199254740993', '1' + '0'.repeat(400)])('keeps other workflows discoverable when API-imported config exceeds browser precision (%s), without exposing editable config', async rawInteger => {
+    const normal: Workflow = { ...workflow, definition: {
+      schema_version: 1,
+      nodes: [{ id: 'normal', type: 'custom.future', name: 'Normal', position: { x: 0, y: 0 }, config: { unknown: { value: 'retained' } } }], edges: [],
+    } }
+    const imported: Workflow = { ...normal, id: 'f3fce261-4bc7-4bd6-9a7c-b33eaaaf10f0', name: 'Imported', definition: {
+      schema_version: 1,
+      nodes: [
+        { id: 'trigger', type: 'trigger.manual', name: 'Trigger', position: { x: 0, y: 0 }, config: {} },
+        { id: 'large', type: 'data.transform', name: 'Large', position: { x: 100, y: 0 }, config: { identifier: 'RAW_INTEGER' } },
+      ],
+      edges: [{ id: 'edge', source: 'trigger', target: 'large', source_handle: 'future', target_handle: null }],
+    } }
+    // The real JSON decoder rounds a valid Python-sized integer or yields
+    // Infinity for larger JSON numbers. Lists must discard those config values;
+    // direct editor loads must reject them before replacing the current graph.
+    const raw = (value: unknown) => JSON.stringify(value).replace('"RAW_INTEGER"', rawInteger)
+    const fetch = vi.fn().mockResolvedValueOnce(new Response(raw([normal, imported])))
+      .mockResolvedValueOnce(response(normal)).mockResolvedValueOnce(new Response(raw(imported)))
+    vi.stubGlobal('fetch', fetch)
+    const items = await listWorkflows()
+    expect(items.map(item => item.name)).toEqual(['Draft', 'Imported'])
+    expect(items[1].definition.nodes.map(node => node.type)).toEqual(['trigger.manual', 'data.transform'])
+    expect(items[1].definition.edges).toEqual(imported.definition.edges)
+    expect(items.flatMap(item => item.definition.nodes).every(node => !('config' in node) && !('position' in node))).toBe(true)
+    expect(JSON.stringify(items)).not.toContain('identifier')
+    await expect(getWorkflow(normal.id)).resolves.toEqual(normal)
+    await expect(getWorkflow(imported.id)).rejects.toMatchObject({ name: 'ApiError', status: 200 })
+  })
+
+  it.each([
+    { ...workflow, id: 'not-a-uuid' },
+    { ...workflow, created_at: '2026-10-28T09:00:00' },
+    { ...workflow, definition: { schema_version: 2, nodes: [], edges: [] } },
+    { ...workflow, definition: { schema_version: 1, nodes: [{ id: 'invalid' }], edges: [] } },
+    { ...workflow, definition: { schema_version: 1, nodes: [{ id: 'n', type: 'custom.future', name: 'Node', position: { x: 0, y: 0 }, config: [] }], edges: [] } },
+    { ...workflow, definition: { schema_version: 1, nodes: [], edges: [{ id: 'e', source: 'missing', target: 'missing' }] } },
+  ])('still rejects malformed workflow list entries rather than weakening structural checks', async item => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response([workflow, item])))
+    await expect(listWorkflows()).rejects.toBeInstanceOf(ApiError)
   })
 })

@@ -6,7 +6,7 @@ Lightweight, self-hosted workflow automation. AI-ready by design.
 
 FlowPilot lets you build and run node-based automation workflows in a visual editor. It stores workflows and execution history in SQLite and runs on your own machine with a single backend process.
 
-**v0.1.0 — Early Public Release preparation.** Backend, frontend, and isolated Docker acceptance passed in [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) on 2026-10-30. Publication still requires passing CI for the exact tagged commit; see the [release checklist](docs/RELEASE_CHECKLIST.md) for the final decision. This is an early development version, not an enterprise stability or long-term compatibility promise.
+**v0.1.0 — Early Public Release.** Backend, frontend, and isolated Docker acceptance passed in [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) on 2026-10-30. Publication requires passing CI for the exact tagged commit; see the [release checklist](docs/RELEASE_CHECKLIST.md) for the final decision. This is an early development version, not an enterprise stability or long-term compatibility promise.
 
 The [project repository](https://github.com/AndyLamyinwik/FlowPilot) contains the application source, tests, workflow examples, and documentation. Versioned publications appear on the [GitHub Releases page](https://github.com/AndyLamyinwik/FlowPilot/releases).
 
@@ -224,7 +224,7 @@ The single [GitHub Actions workflow](.github/workflows/ci.yml) covers backend te
 - SQLite and a single scheduler owner are deliberate constraints; there is no cross-process Exactly-Once guarantee.
 - Execution results arrive synchronously, without WebSocket node-progress streaming or cancellation API.
 - Desktop editor first; narrow screens use a horizontally scrollable workspace. No Undo/Redo or persistent browser draft recovery.
-- Three known P2 issues remain: a backend-valid large integer can block the workflow list; a stale result may not show a deleted node's details while another canvas node is selected; and an extreme history offset returns 500. See the [audit](docs/PHASE_07A_AUDIT.md) for details and workarounds.
+- Two known P2 issues remain: a stale result may not show a deleted node's details while another canvas node is selected, and an extreme history offset returns 500. See the [audit](docs/PHASE_07A_AUDIT.md) for details and workarounds. Workflow summaries remain listable when an individual definition contains an integer the browser cannot safely edit; strict editor precision checks still apply to that definition.
 - Docker acceptance covers an isolated Ubuntu 24.04 CI environment. The local Windows development machine has no Docker Engine, so native Windows Docker execution and other host/architecture combinations were not verified.
 
 Version `0.1.x` is early development. API and workflow formats may evolve; `1.0.0` will require a separate stability decision. Existing compatibility is tested, but no long-term guarantee is promised.

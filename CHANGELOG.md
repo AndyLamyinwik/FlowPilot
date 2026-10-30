@@ -1,6 +1,6 @@
 # Changelog
 
-Changes are grouped by version. The v0.1.0 entry records release preparation verified on 2026-10-30; publication status is recorded in the [release checklist](docs/RELEASE_CHECKLIST.md).
+Changes are grouped by version. Final acceptance and publication status are recorded in the [release checklist](docs/RELEASE_CHECKLIST.md).
 
 ## [Unreleased]
 
@@ -10,12 +10,12 @@ Changes are grouped by version. The v0.1.0 entry records release preparation ver
 - Isolated Docker startup, execution/history and persistence/recreation acceptance in the existing CI; a Compose start-flag compatibility issue found by the first runtime attempt was corrected without weakening health checks.
 - English project overview, installation guidance, and explicit deployment limits.
 - Contribution and security policies, including instructions for GitHub Private Vulnerability Reporting.
-- Candidate release notes, a release checklist, and workflow examples for the first public test version.
+- Release notes, a release checklist, and workflow examples for the first public test version.
 - Repository safety, version consistency, CI, and regression verification recorded without treating unperformed checks as passed.
 - Complete reviewed source, tests, examples and documentation published to the Public FlowPilot repository under the user's explicit source-upload authorization. Formal v0.1.0 release acceptance remains separate.
 - Private vulnerability reporting enabled. The saved setting and public reporting entry were verified on 2026-10-30; no test report/advisory was submitted or notification delivery tested.
 
-## [0.1.0] — Release preparation (2026-10-30)
+## [0.1.0] — 2026-10-30
 
 Target: **Early Public Release**, local-first and self-hosted. Backend, frontend, and real Docker acceptance passed for commit `7fad8be8c7cf368c3a2dc418856d13f61c565a75` in [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437). The exact final release commit must also pass CI before tagging.
 
@@ -39,6 +39,7 @@ Target: **Early Public Release**, local-first and self-hosted. Backend, frontend
 ### Fixed
 
 - History retains complete node IDs and error references when stored, preventing distinct long IDs from becoming the same truncated prefix. Oversized history omits complete summaries or nullable references rather than slicing identity values.
+- FP07A-002: workflow lists validate and project summary metadata separately from editable definitions. One definition containing a browser-unsafe integer no longer blocks other workflows from being listed or opened. Strict precision checks still prevent editing or saving that unsafe definition.
 
 ### Security
 
@@ -55,11 +56,11 @@ Target: **Early Public Release**, local-first and self-hosted. Backend, frontend
 - No live AI provider integrations, AI workflow nodes, tool calling, or model execution.
 - Docker runtime acceptance covers Ubuntu 24.04 CI. The local Windows machine has no Docker Engine; other host platforms and architectures were not verified.
 - Private vulnerability reporting verification covers the enabled setting and public entry only; end-to-end submission, notification delivery, and actual receipt were not tested.
-- Three recorded P2 issues remain: a browser-unsafe integer in one workflow can block the workflow list; stale execution details can be affected by canvas node selection after deletion; an extreme history offset can produce a controlled 500 rather than 422.
+- Two recorded P2 issues remain: stale execution details can be affected by canvas node selection after deletion, and an extreme history offset can produce a controlled 500 rather than 422.
 - Historical node IDs truncated by an older implementation cannot be reliably reconstructed. History is not a full workflow snapshot, and basic redaction cannot identify all secrets in text.
 
 See [RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md) for the current decision and the [Phase 07A audit](docs/PHASE_07A_AUDIT.md) for reproducible issue details.
 
 ## Versioning
 
-The candidate version is `0.1.0`. The `0.1.x` line is early development: API and workflow formats may still need changes, which should be documented with migration guidance when applicable. `1.0.0` will be considered only after more stable public contracts are established; no date or long-term compatibility guarantee is promised.
+The initial version is `0.1.0`. The `0.1.x` line is early development: API and workflow formats may still need changes, which should be documented with migration guidance when applicable. `1.0.0` will be considered only after more stable public contracts are established; no date or long-term compatibility guarantee is promised.

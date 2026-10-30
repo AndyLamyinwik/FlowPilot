@@ -69,7 +69,7 @@ function validateCredentialHeaders(node: BackendNode): void {
 }
 
 /** Runtime-check API data before replacing the current graph. Unknown config is retained. */
-export function assertWorkflowDefinition(value: unknown): asserts value is WorkflowDefinition {
+export function assertWorkflowDefinition(value: unknown, validateConfigValues = true): asserts value is WorkflowDefinition {
   if (!object(value) || value.schema_version !== 1 || !Array.isArray(value.nodes) || !Array.isArray(value.edges)) {
     throw new Error('Invalid workflow definition or unsupported schema version.')
   }
@@ -83,7 +83,8 @@ export function assertWorkflowDefinition(value: unknown): asserts value is Workf
     if (nodeIds.has(node.id)) throw new Error('Duplicate node ID in workflow.')
     if (node.id !== node.id.trim() || node.type !== node.type.trim()) throw new Error('Node IDs and types cannot contain surrounding spaces.')
     nodeIds.add(node.id)
-    validateJsonObject(node.config, false)
+    if (validateConfigValues) validateJsonObject(node.config, false)
+    else if (!object(node.config)) throw new Error('Node config must be a JSON object.')
   }
   const edgeIds = new Set<string>()
   for (const edge of value.edges) {

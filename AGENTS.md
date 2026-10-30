@@ -7,6 +7,7 @@ FlowPilot 是輕量級、可視化、可自行部署的開源自動化工作流�
 - 前端使用 React、TypeScript、Vite 和 Tailwind CSS。
 - 後端使用 Python 3.12+、FastAPI、Pydantic 和 SQLite；容器使用 Docker Compose。
 - 目前授權範圍為 Phase 09：保留 Phase 01–08B，進行 v0.1.0 最終驗收。使用者後續明確要求將完整原始碼先上傳 GitHub，已另行授權現在 commit／push 已審查的原始碼、測試、配置與文件，不以本機缺少 Docker 阻擋原始碼公開。正式 v0.1.0 tag／GitHub Release 仍需對應 Commit 的必要 CI、Docker 驗收與其他發布條件通過，不能直接修改 Checklist 繞過。只允許與發布直接相關的小型修正或驗收，不新增產品功能、不改引擎／Scheduler／Schema／前端、不升級依賴樹。
+- 使用者於 2026-10-30 另行明確批准 FP07A-002 發布前小修：僅調整前端列表摘要邊界及相關型別／測試，避免合法 API 匯入的超大整數配置阻擋整份 Dashboard／Open 列表；保留完整工作流載入、編輯和保存的嚴格數字精度檢查。這是上一條「不改前端」的單項例外，並已授權測試及精確 Commit CI 通過後繼續 tag／Release；不擴大至其他前端功能或既有 P2 修復。
 - 使用者已明確同意建立 AndyLamyinwik/FlowPilot 公開倉庫並保留 ChatGPTBot 自動連接；倉庫已建立，名稱為 FlowPilot，不追加 Bot 名稱。使用者也已另行同意啟用 GitHub Private Vulnerability Reporting 及設定頁所述唯讀安全分析權限，該項已啟用；這兩項具體授權持續有效，不重複詢問。其他掃描／AI／自動修復與帳號整合設定不在此授權內。倉庫建立與正式發布的驗收條件分開，Docker runtime／對應 Commit 的遠端 CI 等未通過時仍不得發布。
 - 不得提前實作後續能力，包括真實 AI Provider／SDK／HTTP 請求、AI Node Executor／Agent／Tool Calling／Streaming、模型下載、WebSocket／即時節點動畫、Undo/Redo 系統、認證、多使用者、Incoming Webhook、分散式排程、背景隊列、任意程式碼/Shell 節點、重試配置 UI、Secrets UI、版本控制、插件市場或自動發布流程。不得更改既有 Repository Visibility、改寫 Git History、Force Push、覆蓋既有 Tag、繞過 Branch Protection、刪除其他 Release 或發布 Docker Hub Image。
 - 未使用的擴展位置保留目錄或文件說明即可，不建立無用途的抽象、介面或依賴。

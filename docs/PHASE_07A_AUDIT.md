@@ -2,7 +2,7 @@
 
 審查日期：2026-10-29（Asia/Shanghai）
 
-後續狀態：本文件保留 Phase 07A 當時的發現與測試。Phase 07B 已強化 FP07A-005 的前後端 Host 邊界，其餘三個 P2 保留；目前部署驗收結果見 [PHASE_07B_RELEASE_READINESS.md](PHASE_07B_RELEASE_READINESS.md)。
+後續狀態：本文件保留 Phase 07A 當時的發現與測試。Phase 07B 已強化 FP07A-005 的前後端 Host 邊界。Phase 09 經使用者明確批准後修復 FP07A-002 列表隔離，保留嚴格編輯精度檢查並通過回歸與實際瀏覽器／API 驗證；FP07A-003／004 仍保留。最新部署與發布驗收見 [PHASE_09_RELEASE_REPORT.md](PHASE_09_RELEASE_REPORT.md)，以下發現與測試保留當時記錄。
 
 ## Overview
 

@@ -6,16 +6,18 @@
 
 **Phase 09：Final Acceptance & GitHub Publication — RELEASE_PARTIALLY_COMPLETED。** 完整來源已正常上傳 [AndyLamyinwik/FlowPilot](https://github.com/AndyLamyinwik/FlowPilot) 的 main，包含產品程式碼、測試、範例、Docker／CI 配置、真實截圖與文件。依使用者要求加入 [繁體中文](../README.zh-TW.md)／[简体中文](../README.zh-CN.md)介紹及英文入口的語言切換，GitHub About 也已更新為三種語言。
 
-**遠端 Docker 與 CI 驗收已通過；正式發布仍 NOT_READY，剩餘 FP07A-002 核心列表問題。** 提交 `7fad8be8c7cf368c3a2dc418856d13f61c565a75` 的[完整 CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) 三個 Job 全部成功，包含真實 Docker 構建／啟動／API 代理／工作流執行與歷史、容器 stop/start／強制重建、SQLite 持久化與排程恢復。本機 Windows 沒有 Docker Engine，這一點仍是本機 NOT_TESTED，不能抹除遠端已實際通過的 Linux 驗收。
+**READY_WITH_WARNINGS：修正與本地整合驗證通過，等待最終提交的精確 CI 後 tag／Release。** 提交 `7fad8be8c7cf368c3a2dc418856d13f61c565a75` 的[完整 CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) 三個 Job 全部成功，包含真實 Docker 構建／啟動／API 代理／執行與歷史、容器 stop/start／強制重建、SQLite 持久化與排程恢復。本機 Windows 沒有 Docker Engine，仍如實列為本機 NOT_TESTED。
 
-最終獨立審查確認：FP07A-002 雖標為 P2，但透過合法 API 匯入超出瀏覽器安全整數範圍的配置後，會阻擋 Dashboard／Open 的整份列表。Phase 09 原要求 READY_WITH_WARNINGS 的警告不能影響核心功能，因此不能只披露後直接發布。目前準備隔離修正提案及回歸測試；實際套用前端修正需要針對 AGENTS「不改前端」規範取得小範圍例外。尚未建立 v0.1.0 tag／GitHub Release；不宣稱發布成功。
+使用者已明確批准 FP07A-002 的六檔前端小修例外，並批准測試通過後繼續發布。列表改為只讀摘要，避免合法 API 匯入的大整數配置阻擋 Dashboard／Open；不安全數字仍不能進入編輯／保存。原始版本的新回歸測試確實失敗，修正後全部 282 項前端測試、型別與構建通過。真實 production 前端／後端瀏覽器驗證正常、9007199254740993 與 10**400 三筆列表及正常開啟、拒絕不安全載入且保留當前畫布、正常工作流隨後成功執行，後端大整數原值未變。測試服務已停止，正式 DB 未動。
+
+剩餘 FP07A-003／004 是舊結果在已修改畫布上的局部選取與超出 int64 的手動歷史分頁邊界；獨立 History Detail／一般 UI 分頁仍可用，不阻擋已驗證核心流程，保留限制而非假稱修復。尚未建立 tag／Release；須等待包含修正的最終提交之必要 CI 全部通過，不能用舊成功代替。
 
 ### Phase 09 實際驗證（2026-10-30）
 
 | 檢查 | 結果 |
 | --- | --- |
 | 完整後端 Pytest | **PASS：796 passed in 10.50s**，含 API／Engine／Executors／Scheduler／History／AI Mock／範例 |
-| 前端 Vitest | **PASS：274 passed，19 files** |
+| 前端 Vitest | **PASS：282 passed，19 files**，含 8 個新增回歸案例 |
 | 正式前端服務測試 | **PASS：12 passed，0 skipped**；首次 sandbox loopback EACCES 的失敗保留，核准本機 socket 權限重跑後通過 |
 | TypeScript／production build | **PASS**，197 modules |
 | Compose default／.env.example、actionlint | **PASS**，本機配置／語法驗證 |
@@ -23,14 +25,15 @@
 | 真實 Docker 構建／啟動／前後端連通 | **PASS（遠端 Ubuntu 24.04）**，兩映像、健康與正式 HTML／API proxy |
 | 真實容器重啟／重建／持久化 | **PASS（遠端）**，工作流、執行歷史、排程狀態與 Next Run 保留；沒有重播副作用，正式資料未動 |
 | 本機 Windows Docker runtime | **NOT_TESTED**，沒有 Docker Engine；其他平台不在本次容器保證範圍 |
-| 原始碼與安全核對 | **PASS（有限範圍）**，197 追蹤檔，初始 194 檔來源審查／24 ignore probes／8 張截圖檢視通過；沒有未解決疑似真實憑證。產品、LICENSE、lockfiles 與正式 DB 不變；117 基準檔僅 CI 為預期驗收擴展 |
+| 原始碼與安全核對 | **PASS（有限範圍）**，197 追蹤檔，初始 194 檔來源審查／24 ignore probes／8 張截圖檢視通過；沒有未解決疑似真實憑證。117 基準檔中 110 檔不變，7 個預期例外為既有 CI 與 6 個已批准前端修正／測試；LICENSE、lockfiles、後端與正式 DB 不變 |
 | 初次匯入 Git 空白檢查 | **FAIL（格式）**，既有 CRLF／EOF 共 482 項、16 檔；未改寫保護來源，後續目標差異需通過 diff --check |
 | 公開隔離 Clone | **PASS**，679d2f4 的 195 檔完整，npm ci --offline／typecheck／build 通過，lockfile 與已追蹤 working tree 未變 |
 | 私人漏洞回報設定／入口 | **PASS**，使用者另行明確同意後啟用，公開路徑已核對；提交／通知投遞 **NOT_TESTED** |
 | 版本／AI／授權 | **PASS**，應用版本 0.1.0、Schema 1；MIT 原文保留；AI 僅離線 Mock，沒有真實模型能力 |
-| 最終 tag／Release | **BLOCKED**，先處理 FP07A-002，並要求修正後精確提交的必要 CI 全通過 |
+| FP07A-002 真實瀏覽器／API | **PASS**，Dashboard／Open 都可列出正常與大整數工作流；正常編輯／執行成功，不安全載入被拒且原畫布／後端原值保留 |
+| 最終 tag／Release | **待執行**，要求修正後精確提交的必要 CI 全通過；不提前聲稱發布成功 |
 
-初始 `8847cf3` 的遠端構建通過；`679d2f4` 首次 runtime attempt 因 Compose start 不支援 --wait 失敗；`7fad8be` 移除該參數後完整驗收成功。保留失敗嘗試，不將舊成功結果冒充新提交通過。詳見 [發布報告](PHASE_09_RELEASE_REPORT.md)與 [Checklist](RELEASE_CHECKLIST.md)。沒有新增產品功能、升級依賴、動用正式 SQLite 或發布 Image，也不開始 V0.2.0。
+初始 `8847cf3` 的遠端構建通過；`679d2f4` 首次 runtime attempt 因 Compose start 不支援 --wait 失敗；`7fad8be` 移除該參數後完整驗收成功。保留失敗嘗試，不將舊成功結果冒充新提交通過。詳見 [發布報告](PHASE_09_RELEASE_REPORT.md)與 [Checklist](RELEASE_CHECKLIST.md)。本階段僅作已批准列表修正，沒有新增產品功能、升級依賴、動用正式 SQLite 或發布 Image，也不開始 V0.2.0。
 
 ## Phase 08B 驗收記錄（2026-10-29）
 

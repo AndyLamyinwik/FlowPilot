@@ -1,6 +1,6 @@
 import type {
   NodeTypeMetadata, ValidationIssue, ValidationResult, Workflow,
-  WorkflowPayload, WorkflowValidationReport,
+  WorkflowPayload, WorkflowSummary, WorkflowValidationReport,
 } from '../types/workflow'
 import { assertWorkflowDefinition } from '../utils/workflowAdapter'
 import { getApiBaseUrl } from './api'
@@ -30,13 +30,13 @@ function awareTime(value: unknown): value is string {
   return typeof value === 'string' && /(?:Z|[+-]\d{2}:\d{2})$/i.test(value) && Number.isFinite(Date.parse(value))
 }
 
-function assertWorkflow(value: unknown): asserts value is Workflow {
+function assertWorkflow(value: unknown, validateConfigValues = true): asserts value is Workflow {
   if (!object(value) || !text(value.id) || !/^[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12}$/i.test(value.id) || !text(value.name)
     || (value.description !== null && typeof value.description !== 'string')
     || !awareTime(value.created_at) || !awareTime(value.updated_at)) {
     throw new Error('Invalid workflow response.')
   }
-  assertWorkflowDefinition(value.definition)
+  assertWorkflowDefinition(value.definition, validateConfigValues)
 }
 
 function assertNodeTypes(value: unknown): asserts value is NodeTypeMetadata[] {
@@ -178,11 +178,27 @@ export async function requestJSON<T>(
 const workflowPath = (id: string) => `/workflows/${encodeURIComponent(id)}`
 const request = requestJSON
 
-export function listWorkflows(signal?: AbortSignal): Promise<Workflow[]> {
-  return request('/workflows', {}, (value): asserts value is Workflow[] => {
+export async function listWorkflows(signal?: AbortSignal): Promise<WorkflowSummary[]> {
+  const items = await request('/workflows', {}, (value): asserts value is Workflow[] => {
     if (!Array.isArray(value)) throw new Error('Expected a workflow list.')
-    value.forEach(assertWorkflow)
+    // Validate config object shape only: valid backend JSON can exceed browser
+    // numeric limits. Discard all config values before exposing summary data;
+    // direct editor loads keep the strict default validation.
+    value.forEach(item => assertWorkflow(item, false))
   }, signal)
+  return items.map(item => ({
+    id: item.id, name: item.name, description: item.description,
+    created_at: item.created_at, updated_at: item.updated_at,
+    definition: {
+      schema_version: item.definition.schema_version,
+      nodes: item.definition.nodes.map(({ id, type, name }) => ({ id, type, name })),
+      edges: item.definition.edges.map(edge => ({
+        id: edge.id, source: edge.source, target: edge.target,
+        ...(edge.source_handle === undefined ? {} : { source_handle: edge.source_handle }),
+        ...(edge.target_handle === undefined ? {} : { target_handle: edge.target_handle }),
+      })),
+    },
+  }))
 }
 
 export function getWorkflow(id: string, signal?: AbortSignal): Promise<Workflow> {

@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import BackendStatus from '../components/BackendStatus'
 import Modal from '../components/ui/Modal'
 import { deleteWorkflow, listWorkflows } from '../services/workflowApi'
-import type { Workflow } from '../types/workflow'
+import type { WorkflowSummary } from '../types/workflow'
 
-function triggerLabel(workflow: Workflow): string {
+function triggerLabel(workflow: WorkflowSummary): string {
   const triggers = workflow.definition.nodes.filter((node) => node.type.startsWith('trigger.'))
   if (triggers.length !== 1) return triggers.length ? 'Multiple triggers · Draft' : 'No trigger · Draft'
   if (triggers[0].type === 'trigger.manual') return 'Manual'
@@ -20,12 +20,12 @@ function updatedAt(value: string): string {
 const errorMessage = (failure: unknown) => failure instanceof Error ? failure.message : 'Request failed. Please try again.'
 
 export default function DashboardPage() {
-  const [workflows, setWorkflows] = useState<Workflow[]>([])
+  const [workflows, setWorkflows] = useState<WorkflowSummary[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [refresh, setRefresh] = useState(0)
   const [deleting, setDeleting] = useState(false)
-  const [confirm, setConfirm] = useState<Workflow | null>(null)
+  const [confirm, setConfirm] = useState<WorkflowSummary | null>(null)
   const [deleteError, setDeleteError] = useState<string | null>(null)
   const mounted = useRef(true)
   const removing = useRef(false)

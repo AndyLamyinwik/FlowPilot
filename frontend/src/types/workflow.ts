@@ -37,6 +37,15 @@ export interface Workflow extends WorkflowPayload {
   updated_at: string
 }
 
+/** Read-only list data: configuration is only loaded through the strict editor path. */
+export interface WorkflowSummary extends Pick<Workflow, 'id' | 'name' | 'description' | 'created_at' | 'updated_at'> {
+  definition: {
+    schema_version: 1
+    nodes: Pick<BackendNode, 'id' | 'type' | 'name'>[]
+    edges: BackendEdge[]
+  }
+}
+
 export interface NodeTypeMetadata {
   type: string
   display_name: string
