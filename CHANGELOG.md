@@ -4,6 +4,14 @@ Changes are grouped by version. Final acceptance and publication status are reco
 
 ## [Unreleased]
 
+### Documentation
+
+- Record the published v0.1.0 Release, exact release commit, and passing branch/tag CI in the English, Traditional Chinese, and Simplified Chinese introductions and acceptance documents. Product code and the existing release tag are unchanged.
+
+## [0.1.0] — 2026-10-30
+
+**[Initial Public Release](https://github.com/AndyLamyinwik/FlowPilot/releases/tag/v0.1.0)**, local-first and self-hosted. Both [branch CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001272625) and [tag CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001570054) passed for the exact release commit `036bb95754064f1d12cbc6d386afc51615b7983a`: 796 backend tests, 282 frontend tests, 12 production server tests, TypeScript, production build, and real Docker acceptance.
+
 ### Release Preparation
 
 - Traditional Chinese and Simplified Chinese introductions, README language navigation, and a trilingual GitHub About description.
@@ -12,12 +20,8 @@ Changes are grouped by version. Final acceptance and publication status are reco
 - Contribution and security policies, including instructions for GitHub Private Vulnerability Reporting.
 - Release notes, a release checklist, and workflow examples for the first public test version.
 - Repository safety, version consistency, CI, and regression verification recorded without treating unperformed checks as passed.
-- Complete reviewed source, tests, examples and documentation published to the Public FlowPilot repository under the user's explicit source-upload authorization. Formal v0.1.0 release acceptance remains separate.
+- Complete reviewed source, tests, examples and documentation published to the Public FlowPilot repository, followed by the annotated v0.1.0 tag and GitHub Release after final acceptance.
 - Private vulnerability reporting enabled. The saved setting and public reporting entry were verified on 2026-10-30; no test report/advisory was submitted or notification delivery tested.
-
-## [0.1.0] — 2026-10-30
-
-Target: **Early Public Release**, local-first and self-hosted. Backend, frontend, and real Docker acceptance passed for commit `7fad8be8c7cf368c3a2dc418856d13f61c565a75` in [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437). The exact final release commit must also pass CI before tagging.
 
 ### Added
 

@@ -1,23 +1,23 @@
 # FlowPilot v0.1.0 Release Checklist
 
-Verification date: **2026-10-30 (Asia/Shanghai)**. Version: **0.1.0, Early Public Release preparation**. Detailed Phase 08B counts and license review below retain their dated evidence unless superseded here.
+Verification date: **2026-10-30 (Asia/Shanghai)**. Version: **v0.1.0, published Early Public Release**. Detailed Phase 08B counts and license review below retain their dated evidence unless superseded here.
 
 ## Release Decision
 
-**READY_WITH_WARNINGS for final commit/push and exact-commit CI.** Complete reviewed source and English/Traditional/Simplified introductions are public. The exact [7fad8be commit CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) passed all backend, frontend and real Docker deployment checks. The user then explicitly approved the narrow FP07A-002 frontend correction; it now passes 282 frontend tests, typecheck, build and real production browser/API verification. No tag/Release may be created until the final commit containing this fix passes its own necessary CI.
+**RELEASE_SUCCESSFUL / READY_WITH_WARNINGS.** The [v0.1.0 Release](https://github.com/AndyLamyinwik/FlowPilot/releases/tag/v0.1.0) was published on 2026-10-30 at 12:16:18 Asia/Shanghai. Its annotated tag points to **036bb95754064f1d12cbc6d386afc51615b7983a**. The exact commit's [branch CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001272625) and [tag CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001570054) both passed all backend, frontend and real Docker deployment jobs before publication. The separately approved FP07A-002 fix passes 282 frontend tests, typecheck/build and actual browser/API verification, including a 401-digit integer decoded as Infinity in JavaScript. The tag is not moved for this post-release documentation update.
 
 FP07A-002 is fixed by separating read-only summaries from strict editor loads, preserving numeric precision safety. The two remaining P2 issues are localized stale-result selection after a graph edit and unsupported extreme pagination; independent historical detail, ordinary pagination, storage integrity and supported core flows remain available. These are disclosed non-blocking limitations, not silently fixed items. No maintainer decision remains pending. Local Windows Docker is still unavailable; real remote Linux container evidence is recorded separately.
 
-Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **BLOCKED**. No unresolved P0 or release-blocking P1 has been identified in the scoped review. No tag, Release or image publication is claimed at this freeze. See the [Phase 09 report](PHASE_09_RELEASE_REPORT.md).
+Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **BLOCKED**. No unresolved P0 or release-blocking P1 has been identified in the scoped review. The tag and Release are verified published; no Docker image publication was performed. See the [Phase 09 report](PHASE_09_RELEASE_REPORT.md).
 
 ## Release Gates
 
 | ID | Status | Evidence / remaining action |
 | --- | --- | --- |
-| R1 — Docker runtime acceptance | PASS | GitHub Ubuntu 24.04, exact 7fad8be: both images built; isolated startup, frontend/proxy/API, manual execution/history, backend stop/start, force-recreation, SQLite persistence/write permissions and schedule recovery all passed. User data untouched; no down -v. |
+| R1 — Docker runtime acceptance | PASS | GitHub Ubuntu 24.04, exact released 036bb95: both images built; isolated startup, frontend/proxy/API, manual execution/history, backend stop/start, force-recreation, SQLite persistence/write permissions and schedule recovery all passed. User data untouched; no down -v. |
 | R2 — Repository/source identity | PASS | Verified Public AndyLamyinwik/FlowPilot, main, normal source pushes and reviewed tree; bounded secret/artifact/screenshot review and ignore probes passed. Final changes must be rechecked before normal push. |
 | R3 — Private vulnerability reporting | PASS | Separately approved, enabled setting and public reporting entry verified; real route in SECURITY. Report submission/notification delivery NOT_TESTED. |
-| R4 — Remote GitHub Actions | PASS for 7fad8be | All three jobs and necessary steps passed for that exact SHA. Any final release commit must pass its own CI before tag creation; old successful runs cannot certify it. |
+| R4 — Remote GitHub Actions | PASS | Released 036bb95 branch and tag runs each passed all necessary jobs; exact SHA checked before publication. |
 | R5 — Core warning assessment | PASS with warnings | Authorized FP07A-002 fix verified by regression and real browser/API. FP07A-003/004 remain localized, disclosed limitations with unaffected independent History Detail / ordinary UI pagination. |
 
 ## Code
@@ -41,7 +41,7 @@ Statuses are literal: **PASS**, **FAIL**, **NOT_TESTED**, **NOT_APPLICABLE**, **
 | Default Compose config | PASS | Official standalone Compose 5.6.0 config --quiet. |
 | .env.example Compose config | PASS | Same validation with --env-file .env.example. |
 | Dockerfile/context review | PASS | Existing pinned runtimes, hashed backend install, npm ci/multistage frontend, no dev server in runtime; context exclusions retained and backend exclusions strengthened. |
-| Docker build | PASS (remote) | Both production images built in exact 7fad8be CI on Ubuntu 24.04. Local Windows Docker unavailable. |
+| Docker build | PASS (remote) | Both production images built in exact 036bb95 CI on Ubuntu 24.04. Local Windows Docker unavailable. |
 | Docker startup and container health | PASS (remote) | Isolated real Compose startup, both health paths and production frontend HTML. |
 | Container stop/start/recreation and data persistence | PASS (remote) | R1 verifies unchanged workflow/history/schedule state, new backend container ID after force recreation and no replay. Temporary data only. |
 | Native production frontend/backend and sample history | PASS | Isolated Uvicorn and dist/Node runtime; imported three exact release payloads, executed Manual Logger, checked matching successful history, and left the schedule disabled. |
@@ -108,12 +108,12 @@ This is a bounded declaration check, not a legal opinion, proof of all asset pro
 | Single CI configuration | PASS | Existing .github/workflows/ci.yml retained; backend/frontend/Docker config/build jobs, no duplicate or publishing workflow. |
 | Local workflow validation | PASS | actionlint 1.7.12; ShellCheck/Pyflakes unavailable and not claimed. |
 | CI permissions and pinned Actions | PASS | contents:read, no persisted checkout credentials, no PR-text shell interpolation or real secrets; exact SHAs match retained official verification evidence. |
-| Remote CI | PASS for 7fad8be | R4; actual remote backend/frontend/Docker jobs inspected. Final release commit needs its own successful run. |
+| Remote CI | PASS | R4; released 036bb95 branch and tag jobs inspected, all successful before publication. |
 | Description/topics/about | PASS | About description applied in English/Traditional/Simplified Chinese at user request; topics below remain suggestions, homepage unset. |
 | Repository creation/description | PASS | Phase 09: verified Public repository, exact name and documented description created after explicit consent. No official website invented; topics remain suggestions. |
 | Candidate application versions | PASS | backend pyproject, FastAPI app, frontend package.json and root package-lock entry all 0.1.0. Backend remains an application, not a newly published Python package; frontend stays private for npm publication. |
 | Published Docker image version | NOT_APPLICABLE | No application image published or image tag created; base image runtime versions are not the application version. |
-| Git tag/GitHub Release | NOT_TESTED | Source commit/push is separately authorized now; formal tag/Release still requires passing gates and exact-commit CI. Image publication remains outside scope. |
+| Git tag/GitHub Release | PASS | Annotated v0.1.0 points to released 036bb95; actual public Release and reviewed notes verified. Image publication remains outside scope. |
 
 Retained official verification links for existing immutable Action pins: [checkout](https://github.com/actions/checkout/commit/d23441a48e516b6c34aea4fa41551a30e30af803), [setup-python](https://github.com/actions/setup-python/commit/ece7cb06caefa5fff74198d8649806c4678c61a1), [setup-node](https://github.com/actions/setup-node/commit/249970729cb0ef3589644e2896645e5dc5ba9c38). No SHA was guessed or changed in this phase.
 
@@ -150,4 +150,4 @@ Phase 08B local checks verified 13 Markdown files / 80 relative links and all 11
 
 ## Maintainer Review
 
-Docker acceptance and necessary CI pass for 7fad8be; the separately approved FP07A-002 core warning correction now passes local regression and actual integration. Preserve precision safety and third-party notices, review the final diff and require its exact commit CI before tagging. Never turn the checklist READY solely by editing its label. No prior tag may be overwritten and no Docker Hub publication is authorized.
+All release gates were satisfied by actual evidence, including the approved FP07A-002 fix and exact released-commit CI. The two localized P2 limitations remain disclosed. Preserve the immutable v0.1.0 tag, precision safety and third-party notices. This post-publication report is a documentation-only maintenance update, not a new product release. Phase 09 ends here; no Docker Hub publication or v0.2.0 work is authorized.

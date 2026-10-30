@@ -6,7 +6,7 @@ Lightweight, self-hosted workflow automation. AI-ready by design.
 
 FlowPilot lets you build and run node-based automation workflows in a visual editor. It stores workflows and execution history in SQLite and runs on your own machine with a single backend process.
 
-**v0.1.0 — Early Public Release.** Backend, frontend, and isolated Docker acceptance passed in [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) on 2026-10-30. Publication requires passing CI for the exact tagged commit; see the [release checklist](docs/RELEASE_CHECKLIST.md) for the final decision. This is an early development version, not an enterprise stability or long-term compatibility promise.
+**[v0.1.0 — Initial Public Release](https://github.com/AndyLamyinwik/FlowPilot/releases/tag/v0.1.0)** was published on 2026-10-30. Backend, frontend, and isolated Docker acceptance passed for the exact release commit in both [branch CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001272625) and [tag CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001570054). This is an early development version, not an enterprise stability or long-term compatibility promise.
 
 The [project repository](https://github.com/AndyLamyinwik/FlowPilot) contains the application source, tests, workflow examples, and documentation. Versioned publications appear on the [GitHub Releases page](https://github.com/AndyLamyinwik/FlowPilot/releases).
 
@@ -56,7 +56,7 @@ Screenshots are captured from real, isolated FlowPilot instances with test workf
 Clone the project into a new checkout:
 
 ```bash
-git clone https://github.com/AndyLamyinwik/FlowPilot.git flowpilot
+git clone --branch v0.1.0 https://github.com/AndyLamyinwik/FlowPilot.git flowpilot
 cd flowpilot
 cp .env.example .env
 docker compose config --quiet
@@ -202,7 +202,7 @@ npm run typecheck
 npm run build
 ```
 
-The single [GitHub Actions workflow](.github/workflows/ci.yml) covers backend tests, frontend checks, Docker configuration/image builds, and isolated startup/persistence/recovery acceptance, with read-only contents permission and verified full Action commit SHAs. The [verified CI run](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) passed for commit `7fad8be8c7cf368c3a2dc418856d13f61c565a75`; newer commits require their own passing runs. Local validation and remote execution are tracked separately. Current commands and evidence are recorded in the [release checklist](docs/RELEASE_CHECKLIST.md) and [project status](docs/PROJECT_STATUS.md). The workflow does not publish releases or images.
+The single [GitHub Actions workflow](.github/workflows/ci.yml) covers backend tests, frontend checks, Docker configuration/image builds, and isolated startup/persistence/recovery acceptance, with read-only contents permission and verified full Action commit SHAs. Both [branch CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001272625) and [tag CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001570054) passed for release commit `036bb95754064f1d12cbc6d386afc51615b7983a`: **796 backend tests, 282 frontend tests, 12 production server tests**, TypeScript, production build, and real Docker acceptance. Newer commits require their own passing runs. Local validation and remote execution are tracked separately. Commands and evidence are recorded in the [release checklist](docs/RELEASE_CHECKLIST.md) and [project status](docs/PROJECT_STATUS.md). The workflow does not publish releases or images.
 
 ## Troubleshooting
 

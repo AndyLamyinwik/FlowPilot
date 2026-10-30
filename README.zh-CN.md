@@ -6,7 +6,7 @@
 
 FlowPilot 让你通过节点与连线建立自动化流程，在自己的机器上执行任务，并用 SQLite 保存工作流、排程状态和执行历史。它优先保持架构简单、运行方式清晰，同时为未来可选的 AI Provider 扩展预留接口。
 
-**v0.1.0 — 早期公开版本。** 后端、前端及隔离 Docker 验收已于 2026-10-30 在 [GitHub Actions](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) 通过；正式发布须确认 tag 对应提交的 CI。最新状态请查看[发布清单](docs/RELEASE_CHECKLIST.md)和[项目状态](docs/PROJECT_STATUS.md)。`v0.1.x` 的 API 与工作流格式仍可能调整，没有企业级稳定性或长期兼容性承诺。
+**[v0.1.0 — 首次公开发布](https://github.com/AndyLamyinwik/FlowPilot/releases/tag/v0.1.0)** 已于 2026-10-30 发布。tag 对应提交的[分支 CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001272625) 与 [tag CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001570054) 均已通过，包含 **796 项后端测试、282 项前端测试、12 项正式前端服务测试**、TypeScript、构建及真实 Docker 验收。详细证据请查看[发布清单](docs/RELEASE_CHECKLIST.md)和[项目状态](docs/PROJECT_STATUS.md)。`v0.1.x` 的 API 与工作流格式仍可能调整，没有企业级稳定性或长期兼容性承诺。
 
 Docker 验收涵盖 Ubuntu 24.04 CI 上的镜像构建、启动、API 代理、手动执行与历史，以及后端重启／重建后的 SQLite 数据保留和排程恢复。本机 Windows 没有 Docker Engine，其他主机平台与架构未验证。
 
@@ -34,7 +34,7 @@ Docker 验收涵盖 Ubuntu 24.04 CI 上的镜像构建、启动、API 代理、�
 需要 Git，以及 Docker Engine／Docker Desktop 和 Docker Compose。默认使用本机端口 `5173` 与 `8000`。
 
 ```bash
-git clone https://github.com/AndyLamyinwik/FlowPilot.git flowpilot
+git clone --branch v0.1.0 https://github.com/AndyLamyinwik/FlowPilot.git flowpilot
 cd flowpilot
 cp .env.example .env
 docker compose config --quiet

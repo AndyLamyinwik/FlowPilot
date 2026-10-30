@@ -4,13 +4,13 @@
 
 ## 當前階段
 
-**Phase 09：Final Acceptance & GitHub Publication — RELEASE_PARTIALLY_COMPLETED。** 完整來源已正常上傳 [AndyLamyinwik/FlowPilot](https://github.com/AndyLamyinwik/FlowPilot) 的 main，包含產品程式碼、測試、範例、Docker／CI 配置、真實截圖與文件。依使用者要求加入 [繁體中文](../README.zh-TW.md)／[简体中文](../README.zh-CN.md)介紹及英文入口的語言切換，GitHub About 也已更新為三種語言。
+**Phase 09：Final Acceptance & GitHub Publication — RELEASE_SUCCESSFUL。** 完整來源已正常上傳 [AndyLamyinwik/FlowPilot](https://github.com/AndyLamyinwik/FlowPilot) 的 main，包含產品程式碼、測試、範例、Docker／CI 配置、真實截圖與文件。依使用者要求加入 [繁體中文](../README.zh-TW.md)／[简体中文](../README.zh-CN.md)介紹及英文入口的語言切換，GitHub About 也已更新為三種語言。
 
-**READY_WITH_WARNINGS：修正與本地整合驗證通過，等待最終提交的精確 CI 後 tag／Release。** 提交 `7fad8be8c7cf368c3a2dc418856d13f61c565a75` 的[完整 CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437) 三個 Job 全部成功，包含真實 Docker 構建／啟動／API 代理／執行與歷史、容器 stop/start／強制重建、SQLite 持久化與排程恢復。本機 Windows 沒有 Docker Engine，仍如實列為本機 NOT_TESTED。
+**v0.1.0 已正式發布（READY_WITH_WARNINGS）。** [GitHub Release](https://github.com/AndyLamyinwik/FlowPilot/releases/tag/v0.1.0) 發布於 2026-10-30 12:16:18 Asia/Shanghai。Annotated tag `v0.1.0` 指向 `036bb95754064f1d12cbc6d386afc51615b7983a`；該提交的[分支 CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001272625)及 [tag CI](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001570054) 全部必要 Job 均在發布前通過，包含真實 Docker 構建／啟動／API 代理／執行與歷史、stop/start／強制重建、SQLite 持久化與排程恢復。發布頁面及公開 API 均已核對，Release 說明符合已審查內容。本機 Windows 沒有 Docker Engine，仍列為本機 NOT_TESTED；遠端 Linux runtime 實際 PASS。
 
 使用者已明確批准 FP07A-002 的六檔前端小修例外，並批准測試通過後繼續發布。列表改為只讀摘要，避免合法 API 匯入的大整數配置阻擋 Dashboard／Open；不安全數字仍不能進入編輯／保存。原始版本的新回歸測試確實失敗，修正後全部 282 項前端測試、型別與構建通過。真實 production 前端／後端瀏覽器驗證正常、9007199254740993 與 10**400 三筆列表及正常開啟、拒絕不安全載入且保留當前畫布、正常工作流隨後成功執行，後端大整數原值未變。測試服務已停止，正式 DB 未動。
 
-剩餘 FP07A-003／004 是舊結果在已修改畫布上的局部選取與超出 int64 的手動歷史分頁邊界；獨立 History Detail／一般 UI 分頁仍可用，不阻擋已驗證核心流程，保留限制而非假稱修復。尚未建立 tag／Release；須等待包含修正的最終提交之必要 CI 全部通過，不能用舊成功代替。
+剩餘 FP07A-003／004 是舊結果在已修改畫布上的局部選取與超出 int64 的手動歷史分頁邊界；獨立 History Detail／一般 UI 分頁仍可用，不阻擋已驗證核心流程，保留限制而非假稱修復。v0.1.0 tag／Release 與精確提交 CI 已完成並核實；這次發布後文件更新使用正常 maintenance commit，不移動已發布 tag。
 
 ### Phase 09 實際驗證（2026-10-30）
 
@@ -21,19 +21,20 @@
 | 正式前端服務測試 | **PASS：12 passed，0 skipped**；首次 sandbox loopback EACCES 的失敗保留，核准本機 socket 權限重跑後通過 |
 | TypeScript／production build | **PASS**，197 modules |
 | Compose default／.env.example、actionlint | **PASS**，本機配置／語法驗證 |
-| 遠端鎖定安裝與回歸 | **PASS**，精確 7fad8be 的後端／前端 Job 全部成功 |
+| 遠端鎖定安裝與回歸 | **PASS**，精確發布提交 036bb95 的後端 796／前端 282／正式服務 12 項，branch／tag CI 均成功 |
 | 真實 Docker 構建／啟動／前後端連通 | **PASS（遠端 Ubuntu 24.04）**，兩映像、健康與正式 HTML／API proxy |
 | 真實容器重啟／重建／持久化 | **PASS（遠端）**，工作流、執行歷史、排程狀態與 Next Run 保留；沒有重播副作用，正式資料未動 |
 | 本機 Windows Docker runtime | **NOT_TESTED**，沒有 Docker Engine；其他平台不在本次容器保證範圍 |
 | 原始碼與安全核對 | **PASS（有限範圍）**，197 追蹤檔，初始 194 檔來源審查／24 ignore probes／8 張截圖檢視通過；沒有未解決疑似真實憑證。117 基準檔中 110 檔不變，7 個預期例外為既有 CI 與 6 個已批准前端修正／測試；LICENSE、lockfiles、後端與正式 DB 不變 |
 | 初次匯入 Git 空白檢查 | **FAIL（格式）**，既有 CRLF／EOF 共 482 項、16 檔；未改寫保護來源，後續目標差異需通過 diff --check |
-| 公開隔離 Clone | **PASS**，679d2f4 的 195 檔完整，npm ci --offline／typecheck／build 通過，lockfile 與已追蹤 working tree 未變 |
+| 公開隔離 Clone | **PASS**，036bb95 的 197 檔完整 Git tree 相同，固定 lock 的 npm ci／含 typecheck 的 build 通過；第一次離線安裝因快取不足失敗，改官方 registry 鎖定安裝後成功；Git working tree 乾淨，lock 僅 checkout 換行形式不同 |
 | 私人漏洞回報設定／入口 | **PASS**，使用者另行明確同意後啟用，公開路徑已核對；提交／通知投遞 **NOT_TESTED** |
 | 版本／AI／授權 | **PASS**，應用版本 0.1.0、Schema 1；MIT 原文保留；AI 僅離線 Mock，沒有真實模型能力 |
 | FP07A-002 真實瀏覽器／API | **PASS**，Dashboard／Open 都可列出正常與大整數工作流；正常編輯／執行成功，不安全載入被拒且原畫布／後端原值保留 |
-| 最終 tag／Release | **待執行**，要求修正後精確提交的必要 CI 全通過；不提前聲稱發布成功 |
+| 最終 tag／Release | **PASS**，annotated v0.1.0／正式 Release 已發布，目標為精確通過 CI 的 036bb95，頁面／公開 API 均已核對 |
+| 公開來源下載／文件檢查 | **PASS**，Release ZIP 實際 HTTP 200，197 個檔案路徑與 tag 相同，MIT／修正 bytes 核對；16 份 Markdown／125 相對連結與 fence／UTF-8 通過 |
 
-初始 `8847cf3` 的遠端構建通過；`679d2f4` 首次 runtime attempt 因 Compose start 不支援 --wait 失敗；`7fad8be` 移除該參數後完整驗收成功。保留失敗嘗試，不將舊成功結果冒充新提交通過。詳見 [發布報告](PHASE_09_RELEASE_REPORT.md)與 [Checklist](RELEASE_CHECKLIST.md)。本階段僅作已批准列表修正，沒有新增產品功能、升級依賴、動用正式 SQLite 或發布 Image，也不開始 V0.2.0。
+初始 `8847cf3` 的遠端構建通過；`679d2f4` 首次 runtime attempt 因 Compose start 不支援 --wait 失敗；`7fad8be` 移除該參數後完整驗收成功。保留失敗嘗試，不將舊成功結果冒充新提交通過。詳見 [發布報告](PHASE_09_RELEASE_REPORT.md)與 [Checklist](RELEASE_CHECKLIST.md)。本階段僅作已批准列表修正，沒有新增產品功能、升級依賴、動用正式 SQLite 或發布 Image。Phase 09 到此完成；保留已公布限制，等待下一階段明確指示，不開始 V0.2.0。
 
 ## Phase 08B 驗收記錄（2026-10-29）
 

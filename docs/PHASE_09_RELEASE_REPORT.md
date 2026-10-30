@@ -1,23 +1,28 @@
 # FlowPilot v0.1.0 — Final Release Report
 
-Verification date: **2026-10-30 (Asia/Shanghai)**. This is the acceptance record frozen before tag creation. Actual final commit, tag, Release URL and publication result must be verified after publication and recorded in the execution summary or a subsequent documentation commit; the released tag must never be moved to add that report.
+Publication and verification date: **2026-10-30 (Asia/Shanghai)**.
 
 ## Release Status
 
-**RELEASE_PARTIALLY_COMPLETED at this pre-publication freeze. Acceptance: READY_WITH_WARNINGS for final commit/push and exact-commit CI.** Source is public, local regression and remote container acceptance pass, and the user explicitly approved the narrow FP07A-002 frontend exception. The fix now passes regression and real production frontend/backend browser verification. No unresolved P0 or release-blocking P1 is known from the scoped audit. The remaining localized P2 limitations below do not block supported editing/execution/history flows or identify a security/storage-integrity issue. Tag/Release remains prohibited until the final commit's own necessary CI succeeds and its target is verified. No image publication or v0.2.0 work is authorized.
+**RELEASE_SUCCESSFUL.** FlowPilot v0.1.0 is published as an Early Public Release with disclosed non-blocking limitations. The complete source, annotated tag and GitHub Release are publicly accessible. All necessary branch and tag CI jobs passed for the exact released commit before publication, including actual Docker runtime acceptance. FP07A-002 was fixed under the user's narrow authorization and verified locally, through the real production frontend/backend, and in exact-commit remote CI. No unresolved P0 or release-blocking P1 was identified in the scoped review.
+
+This post-publication documentation update records actual operations. It does not move the published tag or change the release source. No image publication or v0.2.0 work was performed.
 
 ## Release Identity
 
-| Field | Verified state at freeze |
+| Field | Verified published state |
 | --- | --- |
-| Version | 0.1.0, Early Public Release preparation |
-| Repository | [AndyLamyinwik/FlowPilot](https://github.com/AndyLamyinwik/FlowPilot), ID 1438711382, Public |
-| Branch | main; complete reviewed source, tests, examples, configuration and documentation |
-| Accepted runtime commit | [7fad8be8c7cf368c3a2dc418856d13f61c565a75](https://github.com/AndyLamyinwik/FlowPilot/commit/7fad8be8c7cf368c3a2dc418856d13f61c565a75) |
-| Accepted CI | [Run 40922436437](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/40922436437), all three jobs and all required steps successful |
-| Final release commit | The final documentation commit must independently pass the same CI; the execution summary records its exact SHA |
-| Tag / Release | v0.1.0 / FlowPilot v0.1.0 — Initial Public Release; not yet created at this freeze |
-| Release date / URL | Record the actual publication result after creation; this verification date is not proof of publication |
+| Version | v0.1.0 — Early Public Release |
+| Repository | [AndyLamyinwik/FlowPilot](https://github.com/AndyLamyinwik/FlowPilot), ID 1438711382, Public, default main |
+| Release | [FlowPilot v0.1.0 — Initial Public Release](https://github.com/AndyLamyinwik/FlowPilot/releases/tag/v0.1.0), ID 428647837, published, not draft |
+| Released commit | [036bb95754064f1d12cbc6d386afc51615b7983a](https://github.com/AndyLamyinwik/FlowPilot/commit/036bb95754064f1d12cbc6d386afc51615b7983a) |
+| Annotated tag | v0.1.0; tag object 2047fd5d111c960afeb01e1273ee13fdcac0d610; remote peeled commit equals the released commit |
+| Publication time | 2026-10-30 12:16:18 Asia/Shanghai (04:16:18 UTC) |
+| Exact commit branch CI | [Run 41001272625](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001272625), all three jobs / necessary steps successful before tag creation |
+| Exact commit tag CI | [Run 41001570054](https://github.com/AndyLamyinwik/FlowPilot/actions/runs/41001570054), all three jobs / necessary steps successful before Release publication |
+| Release body | Matches the reviewed version notes with final CI, tagged clone instructions and three language links |
+| Source downloads | Generated ZIP downloaded with HTTP 200 and all 197 archive paths match the exact tag tree; MIT LICENSE and fix bytes verified. Tar endpoint present, not downloaded; no custom binary or Docker Hub image uploaded |
+| Final report handling | Subsequent documentation-only maintenance commit; published tag remains fixed at 036bb95754064f1d12cbc6d386afc51615b7983a |
 
 ## Source Upload and Acceptance History
 
@@ -38,8 +43,8 @@ Verification date: **2026-10-30 (Asia/Shanghai)**. This is the acceptance record
 | Actual production browser / API integration | PASS | Dashboard and Open show both normal/unsafe workflows; normal editor opens; unsafe load leaves current canvas unchanged; subsequent UI run succeeds for all 3 nodes. Backend retains exact integers 9007199254740993 and 10**400 before/after |
 | Compose default / example environment | PASS | Both standalone Compose 5.6.0 config checks |
 | Workflow syntax | PASS | actionlint 1.7.12; ShellCheck/Pyflakes were not run locally |
-| Remote locked installations and regression | PASS | Exact 7fad8be run: backend and frontend jobs, including dependency/syntax, typecheck, tests and build |
-| Remote Docker image builds | PASS | Both production images built on GitHub Ubuntu 24.04 |
+| Remote locked installations and regression | PASS | Exact released 036bb95: 796 backend, 282 frontend and 12 production-server tests; dependency/syntax, typecheck and production build all pass |
+| Remote Docker image builds | PASS | Both production images built for exact 036bb95 on GitHub Ubuntu 24.04, in branch and tag runs |
 | Remote startup / frontend / API | PASS | Fresh isolated Compose project; backend and frontend proxy health plus production HTML |
 | Remote execution / history | PASS | Real manual example imported, validated and successfully executed; matching history and default no-output persistence |
 | Remote SQLite write / persistence / permissions | PASS | Fresh runner-only bind directory; workflow, history and schedule metadata survive backend stop/start and forced container recreation |
@@ -58,10 +63,10 @@ The Docker smoke script uses a unique CI project and temporary data directory. I
 
 | Gate | Status | Evidence / remaining condition |
 | --- | --- | --- |
-| R1 — Docker deployment | PASS | Real image builds, startup, proxy/API, stop/start, recreation, persistent data and scheduler recovery in exact 7fad8be CI |
+| R1 — Docker deployment | PASS | Real image builds, startup, proxy/API, stop/start, recreation, persistent data and scheduler recovery in exact released 036bb95 CI |
 | R2 — Repository/source identity | PASS | Verified owner, Public target and main; normal pushes succeeded; bounded reviewed source/history/artifact checks found no unresolved suspected real secret; no force push or history rewrite |
 | R3 — Private reporting route | PASS | Enabled after explicit user consent; anonymous public advisory page links to the real private reporting route; SECURITY agrees |
-| R4 — Necessary remote CI | PASS for 7fad8be | Every necessary job passed for that exact SHA. A final documentation commit must pass its own CI before tagging; old success cannot certify it |
+| R4 — Necessary remote CI | PASS | Both branch run 41001272625 and tag run 41001570054 passed for released 036bb95 before publication; no old run used to certify it |
 | P0 / P1 | PASS within scoped review | No unresolved P0 or release-blocking P1 identified; previously fixed history identity and Host-boundary issues remain covered |
 | Core warning assessment | PASS with disclosed P2 | FP07A-002 fixed under explicit user authorization and verified with baseline RED, full regression and real browser/API integration. Remaining FP07A-003/004 are localized stale-result / unsupported extreme-pagination cases with independent working paths |
 | Version / license / AI accuracy | PASS | Backend/FastAPI/frontend/lockfile agree at 0.1.0; schema remains 1; original MIT LICENSE retained; offline Mock only |
@@ -81,7 +86,7 @@ See the [original audit](PHASE_07A_AUDIT.md). These localized edge cases do not 
 
 ## Security, Scope and Repository Verification
 
-The authenticated connector and browser confirmed AndyLamyinwik, the exact repository, Public visibility and administrative/push metadata; actual normal source pushes confirm write capability. gh is unavailable, so no fictional gh auth success is reported. A separate collaborator-permission endpoint returned integration-scope 403; that result is preserved as a limitation. Release creation and tag permissions must be established by their actual successful operations.
+The authenticated connector and browser confirmed AndyLamyinwik, the exact repository, Public visibility and administrative/push metadata; actual normal source pushes confirm write capability. gh is unavailable, so no fictional gh auth success is reported. A separate collaborator-permission endpoint returned integration-scope 403; that result is preserved as a limitation. Successful annotated tag push and GitHub Release creation now establish those actual write operations; no CLI authentication result was invented.
 
 Repository creation with the ChatGPTBot auto-connection and Private Vulnerability Reporting were each separately approved by the user after initial review rejections. Those precise settings were applied and verified; no other scanning, AI/autofix, account permission or visibility change was made. The public [advisory page](https://github.com/AndyLamyinwik/FlowPilot/security/advisories) exposes the private route documented in SECURITY; owner/reporter UI differences follow [GitHub's instructions](https://docs.github.com/en/code-security/how-tos/report-and-fix-vulnerabilities/report-privately).
 
@@ -93,8 +98,12 @@ Default ports remain loopback-only. Exact inbound Host checks and the separate e
 
 AI consists of provider contracts, a registry and one offline Mock. There are no real OpenAI/Claude/Gemini/Ollama integrations, AI executors, SDKs, model downloads or public AI endpoints. No prompt/model-generated action gains shell, filesystem, database or scheduler authority.
 
-## Publication Sequence and Recovery
+## Publication and Post-release Verification
 
-After the final reviewed documentation commit is normally pushed, inspect its own completed CI. Only then, recheck that v0.1.0 does not already exist, create an annotated tag pointing to that exact successful commit, push the single tag normally and verify its remote peeled commit. Create the GitHub Release with the reviewed [release notes](releases/v0.1.0.md), then verify the public Release, tag, source, README/LICENSE/examples and links. If any operation fails, preserve successful steps and report the actual partial state; never overwrite a tag or bypass CI/protection.
+The final reviewed release commit was normally pushed to main as 036bb95754064f1d12cbc6d386afc51615b7983a. All necessary jobs for that exact SHA passed. Local and remote v0.1.0 absence was checked, an annotated tag was created and normally pushed, and its remote peeled target was confirmed. The tag-triggered run also passed all necessary jobs before the existing tag was selected on GitHub's authenticated release form and the reviewed title/body published.
 
-The final operation summary must record the actual release commit SHA, CI URL, tag target, Release URL and publication date. A subsequent documentation-only maintenance commit may record publication without moving the released tag. Ignored evidence remains in .tools/phase09 and is not a release asset. Stop after Phase 09; no Docker Hub image or v0.2.0 development.
+The live Release page and public API agree on the actual Release URL, title, tag, published state and commit. The published body matches the reviewed notes. Repository metadata confirms Public visibility and main. Twelve tag-specific connector checks verified README in three languages, original MIT LICENSE, documentation targets and all three workflow examples. All 16 Markdown files passed UTF-8/fence and 127 relative-link checks before the final release commit; the post-publication documentation check passes 125 relative links; external versioned documentation targets were then verified after tag creation. The public source tree contains 197 tracked files, excluding private runtime/build artifacts.
+
+A fresh independent public clone of the exact released commit matched its complete Git tree, installed 131 packages from the existing lockfile and passed production build including TypeScript (197 modules). The first offline install failed because the selected cache lacked an artifact; a normal locked install from the official npm registry passed. An initial raw-byte comparison between clone and workspace lockfiles differed solely due Windows autocrlf checkout; LF-normalized bytes, parsed lock content and clean tracked clone state confirmed no dependency/lock change. These failed preliminary checks are not mislabeled successful offline or byte-identical checks.
+
+The report/status/checklist are updated in a normal documentation-only maintenance commit after publication, as allowed by Phase 09. The released tag continues to identify 036bb95754064f1d12cbc6d386afc51615b7983a; it is never rewritten to add this report. Ignored local evidence and screenshots remain in .tools/phase09 and are not release assets. Phase 09 is complete. Stop here; no Docker Hub image or v0.2.0 development.
