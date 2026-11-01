@@ -2,6 +2,8 @@
 
 [English](README.md) | [繁體中文](README.zh-TW.md) | [简体中文](README.zh-CN.md)
 
+**New to FlowPilot?** Download the [step-by-step Simplified Chinese Word guide](docs/FlowPilot-使用说明书-简体中文.docx) for installation, screenshots, examples and troubleshooting. On GitHub, open the link and choose **Download raw file** to save the Word document.
+
 Lightweight, self-hosted workflow automation. AI-ready by design.
 
 FlowPilot lets you build and run node-based automation workflows in a visual editor. It stores workflows and execution history in SQLite and runs on your own machine with a single backend process.

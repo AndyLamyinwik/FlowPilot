@@ -2,6 +2,8 @@
 
 [English](README.md) | **繁體中文** | [简体中文](README.zh-CN.md)
 
+**第一次使用？** 可下載[簡體中文圖文使用說明書（Word）](docs/FlowPilot-使用说明书-简体中文.docx)，逐步學習安裝、工作流、排程、範例及疑難排解。在 GitHub 開啟連結後，點擊 **Download raw file** 下載 Word 文件。
+
 **輕量、可視化、可自行部署的工作流自動化平台。**
 
 FlowPilot 讓你透過節點與連線建立自動化流程，在自己的電腦上執行，並以 SQLite 保存工作流、排程狀態及執行歷史。架構預留 AI Provider 擴展位置，目前只有離線 Mock，使用基本功能不需要 API Key、付費服務或模型下載。
